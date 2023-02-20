@@ -4,8 +4,11 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 
+import Button from '@mui/material/Button';
+
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { TextField } from '@mui/material';
 
 firebase.initializeApp({
   apiKey: "AIzaSyDnz1D2DLCObjUTg8drrP9FSgNymZPzHjw",
@@ -32,6 +35,7 @@ function App() {
       </header>
 
       <section>
+        <RegionSelection/>
         {user ? <BikeSelection/> : <SignIn/>}
       </section>
 
@@ -48,7 +52,7 @@ function SignIn() {
 
   return (
     <>
-      <button className="sign-in" onClick={signInWithGoogle}>Sign in with Google</button>
+      <Button variant="contained" className="sign-in" onClick={signInWithGoogle}>Sign in with Google</Button>
       <p>Do not violate the community guidelines or you will be banned for life!</p>
     </>
   )
@@ -57,7 +61,7 @@ function SignIn() {
 
 function SignOut() {
   return auth.currentUser && (
-    <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
+    <Button variant="contained" className="sign-out" onClick={() => auth.signOut()}>Sign Out</Button>
   )
 }
 
@@ -80,6 +84,14 @@ function BikeDisplay(props){
   const {type, color} = props.bike;
 
   return <p>🚲: {type}, {color}</p>
+}
+
+function RegionSelection(){
+  return(
+    <>
+      <TextField id="outlined-basic" label="Ort" variant="outlined" />
+    </>
+  )
 }
 
 export default App;
