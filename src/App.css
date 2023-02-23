@@ -37,3 +37,10 @@
     transform: rotate(360deg);
   }
 }
+
+#bodyMainView{
+  height: 90%;
+}
+.fullhight{
+  height: 100%;
+}

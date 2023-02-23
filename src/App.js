@@ -34,9 +34,9 @@ function App() {
         <SignOut />
       </header>
 
-      <section>
-        <RegionSelection/>
-        {user ? <BikeSelection/> : <SignIn/>}
+      <section class="fullhight">
+        
+        {user ? <div id="bodyMainView"> <RegionSelection class="fullhight"/> <MapScreen class="fullhight"/> </div> : <SignIn/>}
       </section>
 
     </div>
@@ -65,6 +65,24 @@ function SignOut() {
   )
 }
 
+function RegionSelection(){
+  return(
+    <>
+    test
+      <TextField id="outlined-basic" label="Ort" variant="outlined" />
+    </>
+  )
+}
+
+function MapScreen(){
+  return(
+    <>
+    test2
+    <TextField > Hier Map </TextField>
+    </>
+  )
+}
+
 function BikeSelection() {
 
   const bikesRef = firestore.collection('bikes');
@@ -86,12 +104,6 @@ function BikeDisplay(props){
   return <p>🚲: {type}, {color}</p>
 }
 
-function RegionSelection(){
-  return(
-    <>
-      <TextField id="outlined-basic" label="Ort" variant="outlined" />
-    </>
-  )
-}
+
 
 export default App;
