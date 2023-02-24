@@ -1,5 +1,7 @@
 import './App.css';
 
+import React, { useState, useRef } from "react";
+
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
@@ -9,6 +11,9 @@ import Button from '@mui/material/Button';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { TextField } from '@mui/material';
+
+import { MapContainer, TileLayer, Map } from "react-leaflet"
+import "leaflet/dist/leaflet.css" 
 
 firebase.initializeApp({
   apiKey: "AIzaSyDnz1D2DLCObjUTg8drrP9FSgNymZPzHjw",
@@ -35,7 +40,8 @@ function App() {
       </header>
 
       <section class="fullhight">
-        
+
+
         {user ? <div id="bodyMainView"> <RegionSelection class="fullhight"/> <MapScreen class="fullhight"/> </div> : <SignIn/>}
       </section>
 
@@ -75,10 +81,19 @@ function RegionSelection(){
 }
 
 function MapScreen(){
+  const [center, setCenter] = useState({ lat:49.479038, lng:8.470520});
+  const ZOOM_LEVEL = 14;
+  const mapRef = useRef() 
   return(
     <>
     test2
-    <TextField > Hier Map </TextField>
+    <MapContainer 
+      center={center}
+      zoom={ZOOM_LEVEL}
+      ref={mapRef}
+    >
+      <TileLayer url="https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}.png?key=p6caGMw9wAWLQ1WY2WIh" />
+    </MapContainer>
     </>
   )
 }
