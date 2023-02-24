@@ -16,9 +16,12 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 import "leaflet/dist/leaflet.css" 
 import L from "leaflet"
 //import { required } from 'yargs';
+import icon from 'leaflet/dist/images/marker-icon.png';
 
 const bikeIcon = new L.icon({
-  iconUrl: "/bicycle.png",
+  //iconUrl: "bicycle.png",
+  iconUrl: icon,
+
   iconSize: [35,45],
 });
 
