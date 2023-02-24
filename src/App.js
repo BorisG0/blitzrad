@@ -12,8 +12,16 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { TextField } from '@mui/material';
 
-import { MapContainer, TileLayer, Map } from "react-leaflet"
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 import "leaflet/dist/leaflet.css" 
+import L from "leaflet"
+//import { required } from 'yargs';
+
+const bikeIcon = new L.icon({
+  iconUrl: "/bicycle.png",
+  iconSize: [35,45],
+});
+
 
 firebase.initializeApp({
   apiKey: "AIzaSyDnz1D2DLCObjUTg8drrP9FSgNymZPzHjw",
@@ -83,7 +91,8 @@ function RegionSelection(){
 function MapScreen(){
   const [center, setCenter] = useState({ lat:49.479038, lng:8.470520});
   const ZOOM_LEVEL = 14;
-  const mapRef = useRef() 
+  const mapRef = useRef()
+  const firstMarkerPosition = {lat:49.48, lng: 8.47}
   return(
     <>
     test2
@@ -92,7 +101,14 @@ function MapScreen(){
       zoom={ZOOM_LEVEL}
       ref={mapRef}
     >
-      <TileLayer url="https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}.png?key=p6caGMw9wAWLQ1WY2WIh" />
+      <TileLayer url="https://api.maptiler.com/maps/openstreetmap/256/{z}/{x}/{y}.jpg?key=p6caGMw9wAWLQ1WY2WIh"
+      attribution='https://api.maptiler.com/maps/openstreetmap/256/tiles.json?key=p6caGMw9wAWLQ1WY2WIh'
+      />
+      <Marker position={firstMarkerPosition} icon={bikeIcon}>
+        <Popup>
+          Here are 5 vehicles available.
+        </Popup>
+      </Marker>
     </MapContainer>
     </>
   )
