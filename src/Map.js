@@ -32,7 +32,10 @@ export function MapScreen(){
     const query = locationsRef.limit(25);
   
     const [locations] = useCollectionData(query, {idField: 'id'});
-    var varTestLocation = {lat: locations[0].location._lat, lng:locations[0].location._long}
+    //var varTestLocation = {lat: locations[0].location._lat, lng:locations[0].location._long}
+    console.log(locations)
+    //console.log(locations[0].location._lat)
+    //console.log(locations[0].location._long)
 
     //var testLocation = {lat:0, lng:0}
     //locations && locations.map(b => testLocation=b.location )
@@ -54,7 +57,7 @@ export function MapScreen(){
             Here are 5 vehicles available.
           </Popup>
         </Marker>
-        <Marker position={varTestLocation} icon={bikeIcon}>
+        <Marker position={secondMarkerPosition} icon={bikeIcon}>
           <Popup>
             Here are 5 vehicles available.
           </Popup>
