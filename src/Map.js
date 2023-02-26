@@ -32,22 +32,12 @@ export function MapScreen(){
 
     const [input, setInput] = useState('');
     const [testLocations, setTestLocations] = useState([])
-        useEffect(() => {
+
+    useEffect(() => {
       locationsRef.onSnapshot(snapshot =>{
-        setTestLocations(snapshot.docs.map(doc => ({id: doc.id, testLocation: doc.data().myLocation })))
+        setTestLocations(snapshot.docs.map(doc => ({id: doc.id, testLocation: doc.data().location })))
       })
     })
-    //const query = locationsRef.limit(25);
-  
-    //const [locations] = useCollectionData(query, {idField: 'id'});
-    //var varTestLocation = {lat: locations[0].location._lat, lng:locations[0].location._long}
-    //console.log(locations)
-    //console.log(locations[0].location._lat)
-    //console.log(locations[0].location._long)
-
-    //var testLocation = {lat:0, lng:0}
-    //locations && locations.map(b => testLocation=b.location )
-    var myTest = {lat: 0.0, lng: 0.0}
 
     return(
       <>
@@ -60,14 +50,14 @@ export function MapScreen(){
         <TileLayer url="https://api.maptiler.com/maps/openstreetmap/256/{z}/{x}/{y}.jpg?key=p6caGMw9wAWLQ1WY2WIh"
         attribution='https://api.maptiler.com/maps/openstreetmap/256/tiles.json?key=p6caGMw9wAWLQ1WY2WIh'
         />
-        <Marker position={firstMarkerPosition} icon={bikeIcon}>
-          <Popup>
-            Here are 5 vehicles available.
-          </Popup>
-        </Marker>
+
         {testLocations.map(testLocation=> (
-          <Marker position={testLocation.testLocation} icon={bikeIcon} >
+          <Marker position={{
+            lat: testLocation.testLocation._lat,
+            lng: testLocation.testLocation._long
+            }} icon={bikeIcon} >
             <Popup>
+            Here are 5 vehicles available.
           </Popup>
           </Marker>
         ))}
