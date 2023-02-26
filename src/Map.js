@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 import "leaflet/dist/leaflet.css" 
@@ -22,24 +22,32 @@ const bikeIcon = new L.icon({
 
 export function MapScreen(){
   const firestore = firebase.firestore();
+  const locationsRef = firestore.collection('locations');
 
     const [center, setCenter] = useState({ lat:49.479038, lng:8.470520});
     const ZOOM_LEVEL = 14;
     const mapRef = useRef()
     const firstMarkerPosition = {lat:49.48, lng: 8.47}
     const secondMarkerPosition = {lat:49.47, lng: 8.48}
-    const locationsRef = firestore.collection('locations');
-    const query = locationsRef.limit(25);
+
+    const [input, setInput] = useState('');
+    const [testLocations, setTestLocations] = useState([])
+        useEffect(() => {
+      locationsRef.onSnapshot(snapshot =>{
+        setTestLocations(snapshot.docs.map(doc => ({id: doc.id, testLocation: doc.data().myLocation })))
+      })
+    })
+    //const query = locationsRef.limit(25);
   
-    const [locations] = useCollectionData(query, {idField: 'id'});
+    //const [locations] = useCollectionData(query, {idField: 'id'});
     //var varTestLocation = {lat: locations[0].location._lat, lng:locations[0].location._long}
-    console.log(locations)
+    //console.log(locations)
     //console.log(locations[0].location._lat)
     //console.log(locations[0].location._long)
 
     //var testLocation = {lat:0, lng:0}
     //locations && locations.map(b => testLocation=b.location )
-
+    var myTest = {lat: 0.0, lng: 0.0}
 
     return(
       <>
@@ -57,11 +65,12 @@ export function MapScreen(){
             Here are 5 vehicles available.
           </Popup>
         </Marker>
-        <Marker position={secondMarkerPosition} icon={bikeIcon}>
-          <Popup>
-            Here are 5 vehicles available.
+        {testLocations.map(testLocation=> (
+          <Marker position={testLocation.testLocation} icon={bikeIcon} >
+            <Popup>
           </Popup>
-        </Marker>
+          </Marker>
+        ))}
       </MapContainer>
       </>
     )

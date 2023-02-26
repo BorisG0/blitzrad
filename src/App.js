@@ -38,11 +38,11 @@ function App() {
         <SignOut />
       </header>
 
-      <section class="fullhight">
+      <section >
 
 
-        {user ? <div id="bodyMainView"> <RegionSelection class="fullhight"/>
-         <MapScreen class="fullhight"/> </div> : <SignIn/>}
+        {user ? <div id="bodyMainView"> <RegionSelection />
+         <MapScreen /> </div> : <SignIn/>}
       </section>
 
     </div>
