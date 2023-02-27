@@ -87,7 +87,7 @@ export function RegionSelection(){
         <div>
             <h2>Location Selection</h2>
             <List>
-                {locations && locations.map(l => <LocationDisplay key={l.id} loc={l} />)}
+                {locations && locations.map(l => <LocationDisplay key={l.name} loc={l} />)}
             </List>
         </div>
     )
