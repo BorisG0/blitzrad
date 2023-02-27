@@ -6,7 +6,7 @@ import L from "leaflet"
 //import { required } from 'yargs';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import testIcon from "./images/bicycle.png"
-import { TextField } from '@mui/material';
+import { TextField, List, ListItem, ListItemText } from '@mui/material';
 
 import firebase from 'firebase/compat/app';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
@@ -86,15 +86,20 @@ export function RegionSelection(){
     return(
         <div>
             <h2>Location Selection</h2>
-            <div>
+            <List>
                 {locations && locations.map(l => <LocationDisplay key={l.id} loc={l} />)}
-            </div>
+            </List>
         </div>
     )
   }
 
   function LocationDisplay(props){
-    const {name} = props.loc;
+    const {id ,name} = props.loc;
+    console.log("id:", id, " name:",name)
   
-    return <p>🚲: {name}</p>
+    return (
+        <ListItem button>
+            <ListItemText primary={name} />
+        </ListItem>
+    )
   }

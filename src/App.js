@@ -42,6 +42,7 @@ function App() {
 
         {user ? <div id="bodyMainView" className="Map-parent"> <RegionSelection className="Region-selection"/>
          <MapScreen className="Map-screen" /> </div> : <SignIn/>}
+
       </section>
 
     </div>
