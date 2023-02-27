@@ -12,6 +12,18 @@ import firebase from 'firebase/compat/app';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 
+firebase.initializeApp({
+    apiKey: "AIzaSyDnz1D2DLCObjUTg8drrP9FSgNymZPzHjw",
+    authDomain: "blitzrad-19056.firebaseapp.com",
+    projectId: "blitzrad-19056",
+    storageBucket: "blitzrad-19056.appspot.com",
+    messagingSenderId: "939189443643",
+    appId: "1:939189443643:web:afba94b3061db3d431501e"
+  })
+  
+  const auth = firebase.auth();
+  const firestore = firebase.firestore();
+
 
 const bikeIcon = new L.icon({
   iconUrl: testIcon,
@@ -41,7 +53,6 @@ export function MapScreen(){
 
     return(
       <>
-      test2
       <MapContainer 
         center={center}
         zoom={ZOOM_LEVEL}
@@ -67,10 +78,23 @@ export function MapScreen(){
 }
 
 export function RegionSelection(){
+    const locationsRef = firestore.collection('locations');
+    const query = locationsRef.limit(25);
+
+    const [locations] = useCollectionData(query, {idField: 'id'});
+
     return(
-      <>
-      test
-        <TextField id="outlined-basic" label="Ort" variant="outlined" />
-      </>
+        <div>
+            <h2>Location Selection</h2>
+            <div>
+                {locations && locations.map(l => <LocationDisplay key={l.id} loc={l} />)}
+            </div>
+        </div>
     )
+  }
+
+  function LocationDisplay(props){
+    const {name} = props.loc;
+  
+    return <p>🚲: {name}</p>
   }
