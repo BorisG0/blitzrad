@@ -5,7 +5,7 @@ import "leaflet/dist/leaflet.css"
 import L from "leaflet"
 //import { required } from 'yargs';
 import icon from 'leaflet/dist/images/marker-icon.png';
-
+import testIcon from "./images/bicycle.png"
 import { TextField } from '@mui/material';
 
 import firebase from 'firebase/compat/app';
@@ -14,10 +14,10 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 
 const bikeIcon = new L.icon({
-  //iconUrl: "./bicycle.png",
-  iconUrl: icon,
+  iconUrl: testIcon,
+  //iconUrl: icon,
 
-  iconSize: [35,45],
+  iconSize: [100,100],
 });
 
 export function MapScreen(){
