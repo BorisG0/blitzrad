@@ -11,6 +11,8 @@ import { TextField, List, ListItem, ListItemText } from '@mui/material';
 import firebase from 'firebase/compat/app';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
+import { getDistance } from 'geolib';
+
 
 firebase.initializeApp({
     apiKey: "AIzaSyDnz1D2DLCObjUTg8drrP9FSgNymZPzHjw",
@@ -31,6 +33,12 @@ const bikeIcon = new L.icon({
 
   iconSize: [100,100],
 });
+
+const userPosition = {lat:49.48, lng: 8.47}
+const userIcon = new L.icon({
+    iconUrl: icon,
+    iconSize: [35, 45]
+})
 
 export function MapScreen(){
   const firestore = firebase.firestore();
@@ -72,6 +80,12 @@ export function MapScreen(){
           </Popup>
           </Marker>
         ))}
+
+        <Marker position={userPosition} icon={userIcon}>
+            <Popup>
+                You are here
+            </Popup>
+        </Marker>
       </MapContainer>
       </>
     )
@@ -94,12 +108,16 @@ export function RegionSelection(){
   }
 
   function LocationDisplay(props){
-    const {id ,name} = props.loc;
-    console.log("id:", id, " name:",name)
+    const {id ,name, location} = props.loc;
+    const pos = {lat: location._lat,lng: location._long}
+    const dist = getDistance(userPosition, pos);
+    console.log("location:", location, " name:",name)
+    console.log("dist: ", dist)
   
     return (
         <ListItem button>
-            <ListItemText primary={name} />
+            <ListItemText  secondaryTypographyProps={{ sx: { color: "white" } }}
+             primary={name} secondary={"📍 "+dist+"m"}/>
         </ListItem>
     )
   }
