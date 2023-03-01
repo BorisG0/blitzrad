@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import {LocationSelection } from './LocationSelection';
 import {MapScreen} from './MapScreen'
+import { RegionSelection } from './RegionSelection';
 
 const auth = firebase.auth();
 
@@ -19,6 +20,7 @@ function App() {
         <SignOut />
       </header>
       <section>
+        <RegionSelection/>
         {user ? <div id="bodyMainView" className="Map-parent"> <LocationSelection className="Region-selection"/>
          <MapScreen className="Map-screen" /> </div> : <SignIn/>}
       </section>
