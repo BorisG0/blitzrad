@@ -17,12 +17,14 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>⚡Blitzrad⚡</h1>
-        <SignOut />
+        {user ? <SignOut/>: <SignIn/>}
       </header>
       <section>
         <RegionSelection/>
-        {user ? <div id="bodyMainView" className="Map-parent"> <LocationSelection className="Region-selection"/>
-         <MapScreen className="Map-screen" /> </div> : <SignIn/>}
+        <div id="bodyMainView" className="Map-parent">
+          <LocationSelection className="Region-selection"/>
+          <MapScreen className="Map-screen" />
+        </div>
       </section>
     </div>
   );
@@ -37,7 +39,6 @@ function SignIn() {
   return (
     <>
       <Button variant="contained" className="sign-in" onClick={signInWithGoogle}>Sign in with Google</Button>
-      <p>Do not violate the community guidelines or you will be banned for life!</p>
     </>
   )
 }
