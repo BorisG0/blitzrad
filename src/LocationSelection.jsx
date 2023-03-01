@@ -3,7 +3,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { getDistance } from 'geolib';
 import firestore from "./firebase"
 
-export function RegionSelection(){
+export function LocationSelection(){
     const locationsRef = firestore.collection('locations');
     const query = locationsRef.limit(25);
     const [locations] = useCollectionData(query, {idField: 'id'});

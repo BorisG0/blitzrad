@@ -4,7 +4,7 @@ import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 import Button from '@mui/material/Button';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import {RegionSelection } from './RegionSelection';
+import {LocationSelection } from './LocationSelection';
 import {MapScreen} from './MapScreen'
 
 const auth = firebase.auth();
@@ -19,7 +19,7 @@ function App() {
         <SignOut />
       </header>
       <section>
-        {user ? <div id="bodyMainView" className="Map-parent"> <RegionSelection className="Region-selection"/>
+        {user ? <div id="bodyMainView" className="Map-parent"> <LocationSelection className="Region-selection"/>
          <MapScreen className="Map-screen" /> </div> : <SignIn/>}
       </section>
     </div>
