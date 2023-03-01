@@ -16,7 +16,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>⚡Blitzrad⚡</h1>
+        <h1 className='Title'>⚡Blitzrad⚡</h1>
         {user ? <SignOut/>: <SignIn/>}
       </header>
       <section>
