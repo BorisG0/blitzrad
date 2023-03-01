@@ -24,6 +24,18 @@ const auth = firebase.auth();
 export function NavBar(){
     const [user] = useAuthState(auth);
 
+    const signInWithGoogle = () => {
+        setAnchorElUser(null);
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider);
+    }
+
+    const signOutWithGoogle = () => {
+        auth.signOut()
+        setAnchorElUser(null);
+    }
+
+
     const pages = ['About Us', 'other Page'];
     const settings = ['Account', 'Settings', 'Login/out'];
 
@@ -158,11 +170,17 @@ export function NavBar(){
                   <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">Account</Typography>
                   </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">
-                        {user ? <SignOut/>: <SignIn/>}
-                    </Typography>
+                  {user?
+                    <MenuItem onClick={signOutWithGoogle}>
+                    <Typography textAlign="center"> Log out</Typography>
+                    </MenuItem> 
+                    :
+                    <MenuItem onClick={signInWithGoogle}>
+                    <Typography textAlign="center"> Log in</Typography>
                   </MenuItem>
+                    
+                }
+
               </Menu>
             </Box>
 
@@ -170,9 +188,7 @@ export function NavBar(){
         </Container>
       </AppBar>
     );
-
 }
-
 
 function SignIn() {
     const signInWithGoogle = () => {
