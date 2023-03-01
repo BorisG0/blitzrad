@@ -3,7 +3,7 @@ import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Button from '@mui/material/Button';
-
+import { Link } from 'react-router-dom';
 
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
@@ -23,7 +23,6 @@ const auth = firebase.auth();
 
 export function NavBar(){
     const [user] = useAuthState(auth);
-
     const signInWithGoogle = () => {
         setAnchorElUser(null);
         const provider = new firebase.auth.GoogleAuthProvider();
@@ -109,9 +108,9 @@ export function NavBar(){
                 }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
+                        <MenuItem component={Link} to="/aboutus" key={page} onClick={handleCloseNavMenu}>
+                            <Typography textAlign="center">{page}</Typography>
+                        </MenuItem>
                 ))}
               </Menu>
             </Box>
@@ -148,7 +147,8 @@ export function NavBar(){
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                    {user? user.displayName.charAt(0) : "?" }
+                  {/*<Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />*/}
                 </IconButton>
               </Tooltip>
               <Menu
@@ -167,7 +167,7 @@ export function NavBar(){
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                  <MenuItem onClick={handleCloseUserMenu}>
+                  <MenuItem component={Link} to="/account" onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">Account</Typography>
                   </MenuItem>
                   {user?
@@ -190,7 +190,7 @@ export function NavBar(){
     );
 }
 
-function SignIn() {
+/*function SignIn() {
     const signInWithGoogle = () => {
       const provider = new firebase.auth.GoogleAuthProvider();
       auth.signInWithPopup(provider);
@@ -207,4 +207,4 @@ function SignIn() {
     return auth.currentUser && (
       <Button   onClick={() => auth.signOut()}>Sign Out</Button>
     )
-  }
+  }*/

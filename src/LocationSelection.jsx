@@ -12,7 +12,6 @@ export function LocationSelection(){
 
     return(
         <div>
-            <Link to="/region">test</Link>
             <h2>Location Selection</h2>
             <List>
                 {locations && locations.map(l => <LocationDisplay key={l.name} loc={l} />)}
