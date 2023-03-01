@@ -9,11 +9,10 @@ export function MapScreen(){
     const bikeIcon = new L.icon({
         iconUrl: testIcon,
         //iconUrl: icon,
-      
         iconSize: [100,100],
       });
       const userPosition = {lat:49.48, lng: 8.47}
-const userIcon = new L.icon({
+    const userIcon = new L.icon({
     iconUrl: icon,
     iconSize: [35, 45]
 })
@@ -23,10 +22,6 @@ const userIcon = new L.icon({
       const [center, setCenter] = useState({ lat:49.479038, lng:8.470520});
       const ZOOM_LEVEL = 14;
       const mapRef = useRef()
-      const firstMarkerPosition = {lat:49.48, lng: 8.47}
-      const secondMarkerPosition = {lat:49.47, lng: 8.48}
-  
-      const [input, setInput] = useState('');
       const [testLocations, setTestLocations] = useState([])
   
       useEffect(() => {
@@ -51,9 +46,6 @@ const userIcon = new L.icon({
               lat: testLocation.testLocation._lat,
               lng: testLocation.testLocation._long
               }} icon={bikeIcon} >
-              <Popup>
-              Here are 5 vehicles available.
-            </Popup>
             </Marker>
           ))}
   

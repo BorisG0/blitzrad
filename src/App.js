@@ -4,7 +4,7 @@ import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 import Button from '@mui/material/Button';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import {RegionSelection } from './Map';
+import {RegionSelection } from './RegionSelection';
 import {MapScreen} from './MapScreen'
 
 const auth = firebase.auth();

@@ -1,40 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
-
-
-//import { required } from 'yargs';
-
-import { TextField, List, ListItem, ListItemText } from '@mui/material';
-
-import firebase from 'firebase/compat/app';
+import {List, ListItem, ListItemText } from '@mui/material';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-
 import { getDistance } from 'geolib';
-
-
-firebase.initializeApp({
-    apiKey: "AIzaSyDnz1D2DLCObjUTg8drrP9FSgNymZPzHjw",
-    authDomain: "blitzrad-19056.firebaseapp.com",
-    projectId: "blitzrad-19056",
-    storageBucket: "blitzrad-19056.appspot.com",
-    messagingSenderId: "939189443643",
-    appId: "1:939189443643:web:afba94b3061db3d431501e"
-  })
-  
-  const auth = firebase.auth();
-  const firestore = firebase.firestore();
-
-
-
-
-
-
-
+import firestore from "./firebase"
 
 export function RegionSelection(){
     const locationsRef = firestore.collection('locations');
     const query = locationsRef.limit(25);
-    
-
     const [locations] = useCollectionData(query, {idField: 'id'});
 
     return(
