@@ -65,10 +65,16 @@ function BasicInformation(){
     return(
         <>
             <h1>Unsere Mission</h1>
-            <p style={{paddingLeft: "8rem", paddingRight: "8rem" }}> Wir wollen jedem die Mobilität anbieten die er braucht. Und das zu einem fairen Preis.
+            <p style={{paddingLeft: "12rem", paddingRight: "12rem" }}> Wir wollen jedem die Mobilität anbieten die er braucht. Und das zu einem fairen Preis.
                 Das Mobilitätserlebnis soll für unsere Kunden perfekt sein. Also wenn ihr irgendwelche Wünsche habt,
                 könnt ihr euch gerne bei uns melden. Aktuell probieren wir unsere Flotte zu erweitern und
-                mehr Standorte zu eröffnen. Melde dich, wenn wir auch in deine Gegend kommen sollen.  </p>
+                mehr Standorte zu eröffnen. Melde dich, wenn wir auch in deine Gegend kommen sollen.
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+                ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+                 et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum
+                  dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore 
+                  magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                   clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.  </p>
         </>
     )
 }
