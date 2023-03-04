@@ -10,8 +10,11 @@ export function LocationSelection(){
     const [selectedLocation, setSelectedLocation] = React.useState(1);
 
     const handleLocationClick = (event, name) => {
-        console.log("handleLocationClick")
-        setSelectedLocation(name);
+        if(selectedLocation == name){
+            setSelectedLocation(null)
+        }else{
+            setSelectedLocation(name);
+        }
     }
 
     const locationsRef = firestore.collection('locations');
@@ -42,10 +45,11 @@ export function LocationSelection(){
             <ListItemText  secondaryTypographyProps={{ sx: { color: "white" } }}
              primary={name}
              secondary={
-                <div>
+                <>
                     <>📍 {dist}m</>
-                    <p>{(props.sLoc == name) ? "lol": null}</p>
-                </div>
+                    <br/>
+                    <>{(props.sLoc == name) ? "lol": null}</>
+                </>
              }/>
         </ListItemButton>
     )
