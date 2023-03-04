@@ -41,7 +41,7 @@ export function LocationSelection(){
     console.log("dist: ", dist)
   
     return (
-        <ListItemButton onClick={(event) => props.clickEvent(event, name)}>
+        <ListItemButton onClick={(event) => props.clickEvent(event, name)} selected={props.sLoc == name}>
             <ListItemText  secondaryTypographyProps={{ sx: { color: "white" } }}
              primary={name}
              secondary={
