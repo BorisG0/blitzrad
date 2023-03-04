@@ -4,9 +4,15 @@ import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 import ListItemText from '@mui/material/ListItemText';
 import { styled } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import firebase from 'firebase/compat/app';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
+
+const auth = firebase.auth();
 
 export function Account() {
+    const [user] = useAuthState(auth);
 
     return (
         <Grid2 container spacing={2}>
@@ -28,9 +34,21 @@ export function Account() {
                     Personal Information
                 </Typography>
                 <List >
-                    <ListItem>
-                        <ListItemText
-                            primary="Single-line item"
+                    <ListItem >
+                        <TextField
+                            disabled
+                            id="filled-disabled"
+                            label="Name"
+                            defaultValue={user.displayName}
+                            variant="filled"
+                        />
+                    </ListItem>
+                    <ListItem >
+                        <TextField
+                            id="adress"
+                            label="Adress"
+                            defaultValue="Hello World"
+                            variant="filled"
                         />
                     </ListItem>
                 </List>
