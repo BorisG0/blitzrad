@@ -31,7 +31,6 @@ export function MapScreen(){
       })
   
       return(
-        <>
         <MapContainer 
           center={center}
           zoom={ZOOM_LEVEL}
@@ -55,6 +54,5 @@ export function MapScreen(){
               </Popup>
           </Marker>
         </MapContainer>
-        </>
       )
   }
