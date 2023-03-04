@@ -2,8 +2,6 @@ import {List, ListItem, ListItemText } from '@mui/material';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { getDistance } from 'geolib';
 import firestore from "./firebase"
-import { Link } from 'react-router-dom';
-
 
 export function LocationSelection(){
     const locationsRef = firestore.collection('locations');
