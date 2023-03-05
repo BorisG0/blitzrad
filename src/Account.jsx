@@ -7,12 +7,39 @@ import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import firebase from 'firebase/compat/app';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import firestore from './firebase';
+import React,{useState,useEffect} from 'react';
 
 
 const auth = firebase.auth();
 
 export function Account() {
-    const [user] = useAuthState(auth);
+    //user geht auch nicht wenn man seite neu lädt
+    const [user] = useAuthState(auth)
+
+    /*const [blog,setBlog]=useState({})
+    const fetchBlogs=async()=>{
+      const response=firestore.collection('users');
+      const data=await response.get();
+      data.docs.forEach(item=>{
+       setBlog([...blog,item.data()])
+      })
+    }
+    useEffect(() => {
+      fetchBlogs();
+    }, [])
+    console.log(blog)
+    var adress = ""
+    firebase.firestore().collection("users").where("id", "==", "crW5255058ReQgNMrQ9R3eks7Op1").get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            adress = doc.data().Adress;
+        });
+    })
+    .catch((error) => {
+        console.log("Error getting documents: ", error);
+    });*/
 
     return (
         <Grid2 container spacing={2}>
@@ -44,10 +71,11 @@ export function Account() {
                         />
                     </ListItem>
                     <ListItem >
+                        
                         <TextField
                             id="adress"
                             label="Adress"
-                            defaultValue="Hello World"
+                            defaultValue="geht noch nicht"
                             variant="filled"
                         />
                     </ListItem>
