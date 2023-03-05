@@ -43,10 +43,11 @@
 
 .Map-parent{
   display: flex;
+  height: 100%;
 }
 
 .Map-screen{
-  width: 100%;
+  
 }
 
 .Region-selection{

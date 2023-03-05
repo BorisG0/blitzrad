@@ -7,7 +7,7 @@ import L from "leaflet"
 import firestore from "./firebase"
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-export function MapScreen(){
+export function MapScreen(props){
     const bikeIcon = new L.icon({
         iconUrl: testIcon,
         //iconUrl: icon,
@@ -50,7 +50,10 @@ export function MapScreen(){
         />
 
          {locations.map((location) => (
-            <Marker key={location.id} position={[location.location.latitude, location.location.longitude]} icon={bikeIcon}>
+            <Marker key={location.id} position={[location.location.latitude, location.location.longitude]} icon={bikeIcon}
+            eventHandlers={{
+              click: (event) => props.clickEvent(event, location.name),
+            }}>
               <Popup>{location.name}</Popup>
             </Marker>
           ))}

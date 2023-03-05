@@ -6,17 +6,7 @@ import firestore from "./firebase"
 
 
 
-export function LocationSelection(){
-    const [selectedLocation, setSelectedLocation] = React.useState(1);
-
-    const handleLocationClick = (event, name) => {
-        if(selectedLocation == name){
-            setSelectedLocation(null)
-        }else{
-            setSelectedLocation(name);
-        }
-    }
-
+export function LocationSelection(props){
     const locationsRef = firestore.collection('locations');
     const query = locationsRef.limit(25);
     const [locations] = useCollectionData(query, {idField: 'id'});
@@ -25,7 +15,7 @@ export function LocationSelection(){
         <div>
             <h2>Location Selection</h2>
             <List>
-                {locations && locations.map(l => <LocationDisplay key={l.name} loc={l} clickEvent={handleLocationClick} sLoc={selectedLocation}/>)}
+                {locations && locations.map(l => <LocationDisplay key={l.name} loc={l} clickEvent={props.handleLocationClick} sLoc={props.selectedLocation}/>)}
             </List>
         </div>
     )
