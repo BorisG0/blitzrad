@@ -37,8 +37,6 @@ export function LocationSelection(){
     const {id ,name, location} = props.loc;
     const pos = {lat: location._lat,lng: location._long}
     const dist = getDistance(userPosition, pos);
-    console.log("location:", location, " name:",name)
-    console.log("dist: ", dist)
   
     return (
         <ListItemButton onClick={(event) => props.clickEvent(event, name)} selected={props.sLoc == name}>
