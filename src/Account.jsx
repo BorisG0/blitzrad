@@ -28,18 +28,19 @@ export function Account() {
     useEffect(() => {
       fetchBlogs();
     }, [])
-    console.log(blog)
+    console.log(blog)*/
+    const [data,setData]= useState([]);
     var adress = ""
     firebase.firestore().collection("users").where("id", "==", "crW5255058ReQgNMrQ9R3eks7Op1").get()
     .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
-            adress = doc.data().Adress;
+            setData([doc.data().Adress]);
         });
     })
     .catch((error) => {
         console.log("Error getting documents: ", error);
-    });*/
+    });
 
     return (
         <Grid2 container spacing={2}>
@@ -71,13 +72,20 @@ export function Account() {
                         />
                     </ListItem>
                     <ListItem >
-                        
+                        {data.map((data) => (
                         <TextField
                             id="adress"
                             label="Adress"
-                            defaultValue="geht noch nicht"
+                            defaultValue={data}
                             variant="filled"
-                        />
+                        />                        ))}
+                        <TextField
+                            id="adress"
+                            label="Adress"
+                            defaultValue={data}
+                            variant="filled"
+                        >
+                        </TextField>
                     </ListItem>
                 </List>
             </Grid2>
