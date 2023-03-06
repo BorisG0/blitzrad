@@ -2,8 +2,9 @@ import * as React from 'react';
 import {List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { getDistance } from 'geolib';
-import firestore from "./firebase"
+import firebase from "./firebase"
 
+const firestore = firebase.firestore();
 
 
 export function LocationSelection(props){

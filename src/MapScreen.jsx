@@ -4,8 +4,9 @@ import icon from 'leaflet/dist/images/marker-icon.png';
 import testIcon from "./images/bicycle.png";
 import "leaflet/dist/leaflet.css" 
 import L from "leaflet"
-import firestore from "./firebase"
+import firebase from "./firebase"
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+const firestore = firebase.firestore();
 
 export function MapScreen(props){
     const bikeIcon = new L.icon({

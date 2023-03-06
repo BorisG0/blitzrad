@@ -1,4 +1,4 @@
-import firebase from 'firebase/compat/app';
+import firebase from './firebase';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
