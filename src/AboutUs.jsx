@@ -19,7 +19,7 @@ export function AboutUs(){
         return(
             <>
                 <h1>Unser Vorstand</h1>
-                <ImageList variant="masonry" cols={matches ? 2 : 1} >
+                <ImageList style={{paddingLeft: "4rem", paddingRight: "4rem" }} variant="masonry" cols={matches ? 2 : 1} >
               {founderData.map((item) => (
                 <ImageListItem key={item.img} >
                   <img
@@ -65,7 +65,7 @@ function BasicInformation(){
     return(
         <>
             <h1>Unsere Mission</h1>
-            <p style={{paddingLeft: "12rem", paddingRight: "12rem" }}> Wir wollen jedem die Mobilität anbieten die er braucht. Und das zu einem fairen Preis.
+            <p style={{paddingLeft: "8rem", paddingRight: "8rem" }}> Wir wollen jedem die Mobilität anbieten die er braucht. Und das zu einem fairen Preis.
                 Das Mobilitätserlebnis soll für unsere Kunden perfekt sein. Also wenn ihr irgendwelche Wünsche habt,
                 könnt ihr euch gerne bei uns melden. Aktuell probieren wir unsere Flotte zu erweitern und
                 mehr Standorte zu eröffnen. Melde dich, wenn wir auch in deine Gegend kommen sollen.
