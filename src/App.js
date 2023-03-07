@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 import { NavBar } from './NavBar';
 import { AboutUs } from './AboutUs';
 import { Account } from './Account';
+import { Payment } from './Payment';
 
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
           <Route path="/region" element={<RegionSelection />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/payment" element={<Payment />} />
+
 
        </Routes>
       </div>
