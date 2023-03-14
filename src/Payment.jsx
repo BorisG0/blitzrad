@@ -1,4 +1,5 @@
 import {PayPalScriptProvider, PayPalButtons} from '@paypal/react-paypal-js';
+import { SendMail } from './SendMail';
 
 export function Payment() {
 
@@ -8,6 +9,7 @@ export function Payment() {
     }
 
     return (
+      <>
         <PayPalScriptProvider options={paypalOptions}>
             <PayPalButtons           createOrder={(data, actions) => {
             return actions.order.create({
@@ -26,5 +28,7 @@ export function Payment() {
             alert("Transaction completed by " + name);
           }}/>
         </PayPalScriptProvider>
+        <SendMail/>
+        </>
     )
 }
