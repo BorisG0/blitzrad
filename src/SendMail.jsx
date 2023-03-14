@@ -30,6 +30,7 @@ const [user] = useAuthState(auth);
     <form ref={form} onSubmit={sendEmail} type="hidden">
       <input type="hidden" defaultValue={user.displayName} name="user_name" />
       <input type="hidden" defaultValue={user.email} name="user_email" />
+      <input type="hidden" defaultValue={"15€"} name="price" />
       <input type="submit" value="Send" />
     </form>
     </>
