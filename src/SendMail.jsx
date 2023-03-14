@@ -1,8 +1,17 @@
 import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
+import firebase from './firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 export const SendMail = () => {
   const form = useRef();
+
+const sendThisMail = () => {
+
+}
+const auth = firebase.auth();
+
+const [user] = useAuthState(auth);
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -16,14 +25,13 @@ export const SendMail = () => {
   };
 
   return (
-    <form ref={form} onSubmit={sendEmail}>
-      <label>Name</label>
-      <input type="text" name="user_name" />
-      <label>Email</label>
-      <input type="email" name="user_email" />
-      <label>Message</label>
-      <textarea name="message" />
+    <>
+    <button onClick={sendThisMail}> tst send mail</button>
+    <form ref={form} onSubmit={sendEmail} type="hidden">
+      <input type="hidden" defaultValue={user.displayName} name="user_name" />
+      <input type="hidden" defaultValue={user.email} name="user_email" />
       <input type="submit" value="Send" />
     </form>
+    </>
   );
 };
