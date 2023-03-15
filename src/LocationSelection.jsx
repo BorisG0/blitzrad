@@ -1,10 +1,12 @@
-import * as React from 'react';
+//import * as React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {List, ListItem, ListItemButton, ListItemText, Button } from '@mui/material';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { getDistance } from 'geolib';
-import firebase from "./firebase"
+import firebase from "./firebase";
 
 const firestore = firebase.firestore();
+const auth = firebase.auth();
 
 
 export function LocationSelection(props){
@@ -17,13 +19,16 @@ export function LocationSelection(props){
     const saveBooking = async (e) => {
         e.preventDefault();
     
-        //const { uid } = auth.currentUser;
+        const { uid } = auth.currentUser;
 
         await bookingsRef.add({
           bookedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          uId: "test user",
+          uId: uid,
+          //uId: "test user",
           type: "Bike",
-          location: props.selectedLocation
+          location: props.selectedLocation,
+          rentStart: firebase.firestore.FieldValue.serverTimestamp(),
+          rentEnd: firebase.firestore.FieldValue.serverTimestamp()
         })
       }
 
