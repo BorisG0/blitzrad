@@ -47,18 +47,16 @@ export function Account() {
                     {bookings && bookings.map(booking =>
                         <ListItem key={booking.bookedAt} divider={true} dense={true} sx={{ border: 0.5, textAlign: "center" }}>
                             <Grid2 container rowSpacing={1} columnSpacing={20} columns={2}>
-                                <Grid2 xs={1} sx={{ textAlign: "right" }}>
-                                    Location
+                                <Grid2 xs={2} >
+                                    Location:    {booking.location}
+
                                 </Grid2>
-                                <Grid2 xs={1} sx={{ textAlign: "left" }}>
-                                    {booking.location}
+                              
+                                <Grid2 xs={2}>
+                                    Booked at:   {getNiceDate(booking.bookedAt)}
+
                                 </Grid2>
-                                <Grid2 xs={1}>
-                                    Booked at
-                                </Grid2>
-                                <Grid2 xs={1}>
-                                    {getNiceDate(booking.bookedAt)}
-                                </Grid2>
+                                
                                 <Grid2 xs={1}>
                                     Rent start
                                 </Grid2>
