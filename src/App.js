@@ -8,22 +8,28 @@ import { AboutUs } from './AboutUs';
 import { Account } from './Account';
 import { Payment } from './Payment';
 
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+
 
 function App() {
 
   return (
     <>
     <div className="App">
-      <NavBar/>
-       <Routes>
-          <Route path="/" element={<MainView/>} />
-          <Route path="/region" element={<RegionSelection />} />
-          <Route path="/aboutus" element={<AboutUs />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/payment" element={<Payment />} />
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <NavBar/>
+        <Routes>
+            <Route path="/" element={<MainView/>} />
+            <Route path="/region" element={<RegionSelection />} />
+            <Route path="/aboutus" element={<AboutUs />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/payment" element={<Payment />} />
 
 
-       </Routes>
+        </Routes>
+      </LocalizationProvider>
+      
       </div>
     </>
   );
