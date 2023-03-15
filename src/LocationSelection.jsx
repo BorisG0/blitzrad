@@ -1,10 +1,13 @@
-import * as React from 'react';
-import {List, ListItem, ListItemButton, ListItemText, Button } from '@mui/material';
+//import * as React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import {List, ListItem, ListItemButton, ListItemText, Button, TextField} from '@mui/material';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import {DatePicker} from '@mui/x-date-pickers'
 import { getDistance } from 'geolib';
-import firebase from "./firebase"
+import firebase from "./firebase";
 
 const firestore = firebase.firestore();
+const auth = firebase.auth();
 
 
 export function LocationSelection(props){
@@ -17,13 +20,16 @@ export function LocationSelection(props){
     const saveBooking = async (e) => {
         e.preventDefault();
     
-        //const { uid } = auth.currentUser;
+        const { uid } = auth.currentUser;
 
         await bookingsRef.add({
           bookedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          uId: "test user",
+          uId: uid,
+          //uId: "test user",
           type: "Bike",
-          location: props.selectedLocation
+          location: props.selectedLocation,
+          rentStart: firebase.firestore.FieldValue.serverTimestamp(),
+          rentEnd: firebase.firestore.FieldValue.serverTimestamp()
         })
       }
 
@@ -47,7 +53,8 @@ export function LocationSelection(props){
     const dist = getDistance(userPosition, pos);
   
     return (
-        <ListItemButton onClick={(event) => props.clickEvent(event, name)} selected={props.sLoc == name}>
+        <ListItemButton onClick={(event) =>props.sLoc == name? null: props.clickEvent(event, name)}
+        selected={props.sLoc == name}>
             <ListItemText  secondaryTypographyProps={{ sx: { color: "white" } }}
              primary={name}
              secondary={
@@ -55,7 +62,9 @@ export function LocationSelection(props){
                     <>📍 {dist}m</>
                     <br/>
                     <>{(props.sLoc == name) ? (<>
-                    lol
+                    <DatePicker label="start"/>
+                    <DatePicker label="ende"/>
+                    <br/>
                     <Button variant="contained" onClick={props.saveBooking}>book</Button>
                     </>): null}</>
                 </>
