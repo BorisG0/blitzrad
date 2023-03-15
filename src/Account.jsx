@@ -15,7 +15,7 @@ import { Divider } from '@mui/material';
 const firestore = firebase.firestore();
 
 const auth = firebase.auth();
-function getNiceDate(date){
+function getNiceDate(date) {
     let dd = date.toDate().getDate()
     let mm = date.toDate().getMonth()
     let yyyy = date.toDate().getFullYear()
@@ -43,40 +43,50 @@ export function Account() {
                 <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
                     Your Bookings
                 </Typography>
-                <List id="test" sx={{ position: "center", margin: "0 auto" }}  >
+                <List id="test" sx={{ position: "center" }}  >
                     {bookings && bookings.map(booking =>
-                        <ListItem key={booking.bookedAt} divider={true} dense={true} sx={{ border: 0.5, textAlign: "center" }}>
-                            <Grid2 container rowSpacing={1} columnSpacing={20} columns={2}>
-                                <Grid2 xs={2} >
-                                    Location:    {booking.location}
+                        <ListItem key={booking.bookedAt} sx={{ border: 0.5, textAlign: "center" }}>
+                            <Grid2 container >
 
-                                </Grid2>
-                              
-                                <Grid2 xs={2}>
-                                    Booked at:   {getNiceDate(booking.bookedAt)}
+                                <Grid2 xs={6} container rowSpacing={1}>
+                                    <Grid2 xs={6}  >
+                                        Location:
+                                    </Grid2>
+                                    <Grid2 xs={6}  >
+                                        {booking.location}
+                                    </Grid2>
+                                    <Grid2 xs={6}  >
+                                        Booked at:
+                                    </Grid2>
+                                    <Grid2 xs={6}>
+                                        {getNiceDate(booking.bookedAt)}
 
+                                    </Grid2>
+
+                                    <Grid2 xs={6}>
+                                        Rent start
+                                    </Grid2>
+                                    <Grid2 xs={6}>
+                                        {getNiceDate(booking.rentStart)}
+                                    </Grid2>
+                                    <Grid2 xs={6}>
+                                        Rent end
+                                    </Grid2>
+                                    <Grid2 xs={6}>
+                                        {getNiceDate(booking.rentEnd)}
+                                    </Grid2>
+                                    <Grid2 xs={6}>
+                                        Type
+                                    </Grid2>
+                                    <Grid2 xs={6}>
+                                        {booking.type}
+                                    </Grid2>
                                 </Grid2>
-                                
-                                <Grid2 xs={1}>
-                                    Rent start
-                                </Grid2>
-                                <Grid2 xs={1}>
-                                    {getNiceDate(booking.rentStart)}
-                                </Grid2>
-                                <Grid2 xs={1}>
-                                    Rent end
-                                </Grid2>
-                                <Grid2 xs={1}>
-                                    {getNiceDate(booking.rentEnd)}
-                                </Grid2>
-                                <Grid2 xs={1}>
-                                    Type
-                                </Grid2>
-                                <Grid2 xs={1}>
-                                    {booking.type}
+                                <Grid2 xs={6}>
+                                    Hier QR Code
                                 </Grid2>
                             </Grid2>
-                            <Divider />
+
                         </ListItem>
                     )}
 
