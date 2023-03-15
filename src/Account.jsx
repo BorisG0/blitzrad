@@ -15,7 +15,14 @@ import { Divider } from '@mui/material';
 const firestore = firebase.firestore();
 
 const auth = firebase.auth();
-
+function getNiceDate(date){
+    let dd = date.toDate().getDate()
+    let mm = date.toDate().getMonth()
+    let yyyy = date.toDate().getFullYear()
+    let hh = date.toDate().getHours()
+    let minmin = date.toDate().getMinutes()
+    return dd + "." + mm + "." + yyyy + " " + hh + ":" + minmin
+}
 export function Account() {
     const [query, setQuery] = useState()
     const [bookings] = useCollectionData(query, { idField: 'id' });
@@ -50,31 +57,19 @@ export function Account() {
                                     Booked at
                                 </Grid2>
                                 <Grid2 xs={1}>
-                                    {booking.bookedAt.toDate().getDate() + ". "
-                                        + booking.bookedAt.toDate().getMonth() + '. '
-                                        + booking.bookedAt.toDate().getFullYear() + " "
-                                        + booking.bookedAt.toDate().getHours() + ":"
-                                        + booking.bookedAt.toDate().getMinutes()}
+                                    {getNiceDate(booking.bookedAt)}
                                 </Grid2>
                                 <Grid2 xs={1}>
                                     Rent start
                                 </Grid2>
                                 <Grid2 xs={1}>
-                                    {booking.rentStart.toDate().getDate() + ". "
-                                        + booking.rentStart.toDate().getMonth() + '. '
-                                        + booking.rentStart.toDate().getFullYear() + " "
-                                        + booking.rentStart.toDate().getHours() + ":"
-                                        + booking.rentStart.toDate().getMinutes()}
+                                    {getNiceDate(booking.rentStart)}
                                 </Grid2>
                                 <Grid2 xs={1}>
                                     Rent end
                                 </Grid2>
                                 <Grid2 xs={1}>
-                                    {booking.rentEnd.toDate().getDate() + ". "
-                                        + booking.rentEnd.toDate().getMonth() + '. '
-                                        + booking.rentEnd.toDate().getFullYear() + " "
-                                        + booking.rentEnd.toDate().getHours() + ":"
-                                        + booking.rentEnd.toDate().getMinutes()}
+                                    {getNiceDate(booking.rentEnd)}
                                 </Grid2>
                                 <Grid2 xs={1}>
                                     Type
