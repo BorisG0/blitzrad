@@ -25,7 +25,7 @@ function App() {
             <Route path="/aboutus" element={<AboutUs />} />
             <Route path="/account" element={<Account />} />
             <Route path="/payment" element={<Payment />} />
-            <Route path="/scanned" element={<ScannedTicket/>}/>
+            <Route path="/scanned/:id" element={<ScannedTicket/>}/>
 
 
         </Routes>

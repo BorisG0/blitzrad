@@ -12,6 +12,8 @@ import firebase from './firebase';
 import './Account.css';
 import { QRCodeCanvas } from "qrcode.react";
 import QRCode from 'react-qr-code';
+import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 const firestore = firebase.firestore();
 function otherQrCode(url) {
@@ -34,8 +36,7 @@ function qrCode(url) {
             level={"H"}
         />)
 }
-
-
+const number = 123
 const auth = firebase.auth();
 function getNiceDate(date) {
     let dd = date.toDate().getDate()
@@ -112,7 +113,7 @@ export function Account() {
                                     </div>
                                 </Grid2>
                             </Grid2>
-
+                            <Button component={Link} to={`/scanned/${number}`}> mein Button </Button>
                         </ListItem>
                     )}
 
