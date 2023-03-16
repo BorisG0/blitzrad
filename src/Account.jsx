@@ -47,6 +47,24 @@ function getNiceDate(date) {
     return dd + "." + mm + "." + yyyy + " " + hh + ":" + minmin
 }
 export function Account() {
+    /*const [tests, setTests] = useState([]);
+    useEffect(() => {
+        let user = firebase.auth().currentUser;
+        const database = firebase.firestore();
+        const unsubscribe = database
+          .collection("bookings")
+          .where("uId", "==", user.uid)
+          .onSnapshot((snapshot) => {
+            setTests(snapshot.docs.map((doc) => doc.data()));
+            console.log(tests)
+
+          });
+    
+        return () => {
+          unsubscribe();
+        };
+      }, []);*/
+
     const [query, setQuery] = useState()
     const [bookings] = useCollectionData(query, { idField: 'id' });
     const [user, loading, error] = useAuthState(auth);
@@ -113,7 +131,7 @@ export function Account() {
                                     </div>
                                 </Grid2>
                             </Grid2>
-                            <Button component={Link} to={`/scanned/${number}`}> mein Button </Button>
+                            <Button component={Link} to={`/scanned/${booking.bookedAt}`}> mein Button </Button>
                         </ListItem>
                     )}
 
