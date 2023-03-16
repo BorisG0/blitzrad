@@ -10,9 +10,31 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import firebase from './firebase';
 import './Account.css';
-import { Divider } from '@mui/material';
+import { QRCodeCanvas } from "qrcode.react";
+import QRCode from 'react-qr-code';
 
 const firestore = firebase.firestore();
+function otherQrCode(url) {
+    return (
+        <QRCode 
+            title="GeeksForGeeks"
+            value={url}
+            bgColor={'#FFFFFF'}
+            fgColor={'#000000'}
+            size={256}
+        />)
+}
+function qrCode(url) {
+    return (
+        <QRCodeCanvas style={{borderStyle: "solid", borderWidth: "5px"}}
+            id="qrCode"
+            value={url}
+            size={300}
+            bgColor={"#ffffff"}
+            level={"H"}
+        />)
+}
+
 
 const auth = firebase.auth();
 function getNiceDate(date) {
@@ -27,6 +49,7 @@ export function Account() {
     const [query, setQuery] = useState()
     const [bookings] = useCollectionData(query, { idField: 'id' });
     const [user, loading, error] = useAuthState(auth);
+
     if (loading) {
         console.log("noch nicht")
         return <div> Loading... </div>;
@@ -82,8 +105,11 @@ export function Account() {
                                         {booking.type}
                                     </Grid2>
                                 </Grid2>
-                                <Grid2 xs={6}>
-                                    Hier QR Code
+                                <Grid2 xs={6} >
+                                    <div style={{color: "red"}} >
+                                    {otherQrCode("https://hackernoon.com/how-to-build-a-qr-code-generator-in-react")}
+                                    {booking.id}
+                                    </div>
                                 </Grid2>
                             </Grid2>
 

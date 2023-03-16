@@ -7,7 +7,7 @@ import { NavBar } from './NavBar';
 import { AboutUs } from './AboutUs';
 import { Account } from './Account';
 import { Payment } from './Payment';
-
+import { ScannedTicket } from './ScannedTicket';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
@@ -25,6 +25,7 @@ function App() {
             <Route path="/aboutus" element={<AboutUs />} />
             <Route path="/account" element={<Account />} />
             <Route path="/payment" element={<Payment />} />
+            <Route path="/scanned" element={<ScannedTicket/>}/>
 
 
         </Routes>
