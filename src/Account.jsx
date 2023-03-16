@@ -7,7 +7,7 @@ import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import React, { useState, useEffect, useMemo } from 'react';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useCollectionData, useCollection } from 'react-firebase-hooks/firestore';
 import firebase from './firebase';
 import './Account.css';
 import { QRCodeCanvas } from "qrcode.react";
@@ -65,20 +65,30 @@ export function Account() {
         };
       }, []);*/
 
-    const [query, setQuery] = useState()
-    const [bookings] = useCollectionData(query, { idField: 'id' });
-    const [user, loading, error] = useAuthState(auth);
 
+
+
+    const [query, setQuery] = useState()
+    const [bookings] = useCollection(query, { idField: 'id' });
+    const [user, loading, error] = useAuthState(auth);
+    let dataArray = []
     if (loading) {
-        console.log("noch nicht")
         return <div> Loading... </div>;
     } else if (user) {
-        console.log(user.uid)
         const bookingsRef = firestore.collection('bookings');
-        console.log(query)
         if (query == undefined) {
-            console.log("changed it s")
             setQuery(bookingsRef.where("uId", "==", user.uid));//.orderBy("bookedAt", "desc")
+            /*firebase.firestore().collection("bookings").where("uId", "==", user.uid).get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    dataArray.push({id: doc.id, data: doc.data()})
+                    console.log(dataArray)
+                    // doc.data() is never undefined for query doc snapshots
+                });
+            })
+            .catch((error) => {
+                console.log("Error getting documents: ", error);
+            });*/
         }
         return (
             <>
@@ -86,8 +96,8 @@ export function Account() {
                     Your Bookings
                 </Typography>
                 <List id="test" sx={{ position: "center" }}  >
-                    {bookings && bookings.map(booking =>
-                        <ListItem key={booking.bookedAt} sx={{ border: 0.5, textAlign: "center" }}>
+                    {bookings && bookings.docs.map(booking =>
+                        <ListItem key={booking.idField} sx={{ border: 0.5, textAlign: "center" }}>
                             <Grid2 container >
 
                                 <Grid2 xs={6} container rowSpacing={1}>
@@ -95,13 +105,13 @@ export function Account() {
                                         Location:
                                     </Grid2>
                                     <Grid2 xs={6}  >
-                                        {booking.location}
+                                        {booking.data().location}
                                     </Grid2>
                                     <Grid2 xs={6}  >
                                         Booked at:
                                     </Grid2>
                                     <Grid2 xs={6}>
-                                        {getNiceDate(booking.bookedAt)}
+                                        {getNiceDate(booking.data().bookedAt)}
 
                                     </Grid2>
 
@@ -109,29 +119,26 @@ export function Account() {
                                         Rent start
                                     </Grid2>
                                     <Grid2 xs={6}>
-                                        {getNiceDate(booking.rentStart)}
+                                        {getNiceDate(booking.data().rentStart)}
                                     </Grid2>
                                     <Grid2 xs={6}>
                                         Rent end
                                     </Grid2>
                                     <Grid2 xs={6}>
-                                        {getNiceDate(booking.rentEnd)}
+                                        {getNiceDate(booking.data().rentEnd)}
                                     </Grid2>
                                     <Grid2 xs={6}>
                                         Type
                                     </Grid2>
                                     <Grid2 xs={6}>
-                                        {booking.type}
+                                        {booking.data().type}
                                     </Grid2>
                                 </Grid2>
                                 <Grid2 xs={6} >
-                                    <div style={{color: "red"}} >
                                     {otherQrCode("https://hackernoon.com/how-to-build-a-qr-code-generator-in-react")}
-                                    {booking.id}
-                                    </div>
                                 </Grid2>
                             </Grid2>
-                            <Button component={Link} to={`/scanned/${booking.bookedAt}`}> mein Button </Button>
+                            <Button component={Link} to={`/scanned/${booking.id}`}> mein Button </Button>
                         </ListItem>
                     )}
 
