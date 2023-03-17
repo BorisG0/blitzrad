@@ -67,7 +67,7 @@ export function NavBar() {
           <Typography 
             variant="h6"
             noWrap
-            component={Link}
+            component="a"
             to="/"
             sx={{
               mr: 2,
