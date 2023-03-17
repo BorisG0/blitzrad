@@ -167,7 +167,7 @@ export function NavBar(){
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                  <MenuItem component={Link} to="/account" onClick={handleCloseUserMenu}>
+                  <MenuItem component={user? Link: null} to="/account" onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">Account</Typography>
                   </MenuItem>
                   {user?

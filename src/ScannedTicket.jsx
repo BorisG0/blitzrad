@@ -6,7 +6,6 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { Routes, Route, useParams } from 'react-router-dom';
 import { doc, getDoc } from "firebase/firestore";
 import React, { useState, useEffect, useMemo } from 'react';
-import { useFirestoreDocument } from "@react-query-firebase/firestore";
 import { useDocument } from 'react-firebase-hooks/firestore';
 
 const firestore = firebase.firestore();
