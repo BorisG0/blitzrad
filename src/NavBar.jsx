@@ -4,7 +4,6 @@ import 'firebase/compat/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
-
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -17,38 +16,29 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-
-import { Alert } from '@mui/material';
 import { Snackbar } from '@mui/material';
-
 
 const auth = firebase.auth();
 
 export function NavBar() {
+  const pages = ['About Us', 'other Page'];
   const [user] = useAuthState(auth);
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
+
   const signInWithGoogle = () => {
     setAnchorElUser(null);
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider);
   }
-
   const signOutWithGoogle = () => {
     auth.signOut()
     setAnchorElUser(null);
   }
 
-
-  const pages = ['About Us', 'other Page'];
-  const settings = ['Account', 'Settings', 'Login/out'];
-
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-  const [open, setOpen] = React.useState(false);
   const handleClick = () => {
     setOpen(true);
-
   };
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -57,33 +47,28 @@ export function NavBar() {
     setOpen(false);
   };
 
-
-
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-
   };
 
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
+          <Typography 
             variant="h6"
             noWrap
-            component="a"
-            href="/"
+            component={Link}
+            to="/test"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -162,7 +147,6 @@ export function NavBar() {
               </Button>
             ))}
           </Box>
-
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -215,33 +199,11 @@ export function NavBar() {
                 <MenuItem onClick={signInWithGoogle}>
                   <Typography textAlign="center"> Log in</Typography>
                 </MenuItem>
-
               }
-
             </Menu>
           </Box>
-
         </Toolbar>
       </Container>
     </AppBar>
   );
 }
-
-/*function SignIn() {
-    const signInWithGoogle = () => {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      auth.signInWithPopup(provider);
-    }
-  
-    return (
-      <>
-        <Button   onClick={signInWithGoogle}>Sign in with Google</Button>
-      </>
-    )
-  }
-  
-  function SignOut() {
-    return auth.currentUser && (
-      <Button   onClick={() => auth.signOut()}>Sign Out</Button>
-    )
-  }*/
