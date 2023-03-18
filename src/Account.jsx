@@ -54,7 +54,7 @@ export function Account() {
     } else if (user) {
         const bookingsRef = firestore.collection('bookings');
         if (query == undefined) {
-            setQuery(bookingsRef.where("uId", "==", user.uid));//.orderBy("bookedAt", "desc")
+            setQuery(bookingsRef.where("uId", "==", user.uid));//.orderBy("bookedAt", "desc"))
         }
         return (
             <>
@@ -63,7 +63,7 @@ export function Account() {
                 </Typography>
                 <List id="test" sx={{ position: "center" }}  >
                     {bookings && bookings.docs.map(booking =>
-                        <ListItem key={booking.idField} sx={{ border: 0.5, textAlign: "center" }}>
+                        <ListItem key={booking.id} sx={{ border: 0.5, textAlign: "center" }}>
                             <Grid2 container >
 
                                 <Grid2 xs={6} container rowSpacing={1}>
