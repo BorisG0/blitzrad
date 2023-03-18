@@ -15,6 +15,12 @@ export function LocationSelection(props){
     const locationsRef = firestore.collection('locations');
     const bookingsRef = firestore.collection('bookings');
 
+    const [selectedDate, setSelectedDate] = React.useState(null);
+
+    const handleDateChange = (date) => {
+      setSelectedDate(date);
+    }
+
     const query = locationsRef.limit(25);
     const [locations] = useCollectionData(query, {idField: 'id'});
 
@@ -22,6 +28,7 @@ export function LocationSelection(props){
         e.preventDefault();
     
         const { uid } = auth.currentUser;
+        const rentEndTimestamp = firebase.firestore.Timestamp.fromDate(new Date(selectedDate));
 
         await bookingsRef.add({
           bookedAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -30,7 +37,7 @@ export function LocationSelection(props){
           type: "Bike",
           location: props.selectedLocation,
           rentStart: firebase.firestore.FieldValue.serverTimestamp(),
-          rentEnd: firebase.firestore.FieldValue.serverTimestamp()
+          rentEnd: rentEndTimestamp
         })
       }
 
@@ -40,7 +47,9 @@ export function LocationSelection(props){
             <List>
                 {locations && locations.map(l => <LocationDisplay key={l.name} loc={l}
                 clickEvent={props.handleLocationClick} sLoc={props.selectedLocation}
-                saveBooking={saveBooking}/>)}
+                saveBooking={saveBooking}
+                selectedDate = {selectedDate} handleDateChange={handleDateChange}
+                />)}
             </List>
         </div>
     )
@@ -63,8 +72,7 @@ export function LocationSelection(props){
                     <>📍 {dist}m</>
                     <br/>
                     <>{(props.sLoc == name) ? (<>
-                    <DatePicker label="start"/>
-                    <DatePicker label="ende"/>
+                    <DatePicker label="end of rental" value={props.selectedDate} onChange={props.handleDateChange}/>
                     <br/>
                     <Button variant="contained" onClick={props.saveBooking}>book</Button>
                     </>): null}</>
