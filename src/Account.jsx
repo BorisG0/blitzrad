@@ -37,7 +37,7 @@ function qrCode(url) {
         />)
 }
 const auth = firebase.auth();
-function getNiceDate(date) {
+export function getNiceDate(date) {
     let dd = date.toDate().getDate()
     let mm = date.toDate().getMonth()
     let yyyy = date.toDate().getFullYear()

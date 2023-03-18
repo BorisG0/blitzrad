@@ -7,27 +7,48 @@ import { Routes, Route, useParams } from 'react-router-dom';
 import { doc, getDoc } from "firebase/firestore";
 import React, { useState, useEffect, useMemo } from 'react';
 import { useDocument } from 'react-firebase-hooks/firestore';
+import { getNiceDate } from "./Account"
 
 const firestore = firebase.firestore();
 
-export function ScannedTicket(){
+export function ScannedTicket() {
 
-    const { id } = useParams()
+  const { id } = useParams()
+  
+  const [value, loading, error] = useDocument(
+    doc(firestore, 'bookings', id),
+    {
+      snapshotListenOptions: { includeMetadataChanges: true },
+    }
+  );
 
-    const [value, loading, error] = useDocument(
-        doc(firestore, 'bookings', id),
-        {
-          snapshotListenOptions: { includeMetadataChanges: true },
-        }
-      );
-   
-    return(
-        <div>
-      <p>
-        {error && <strong>Error: {JSON.stringify(error)}</strong>}
-        {loading && <span>Document: Loading...</span>}
-        {value && <span>Document: k {JSON.stringify(value.data())}</span>}
-      </p>
+  return (
+    <div>
+      {error && <strong>Error: {JSON.stringify(error)}</strong>}
+      {loading && <span>Document: Loading...</span>}
+      {value &&
+        <>
+          <Card sx={{ minWidth: 275 }}>
+            <CardContent>
+              <Typography variant="h4">
+                Scanned Booking
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} >
+                Location: {value.data().location}
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} >
+                Start date: {getNiceDate(value.data().rentStart)}
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} >
+                End date: {getNiceDate(value.data().rentEnd)}
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} >
+                Type: {value.data().type}
+              </Typography>
+            </CardContent>
+          </Card>
+        </>
+      }
     </div>
   )
 }
