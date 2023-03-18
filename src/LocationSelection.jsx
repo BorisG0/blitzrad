@@ -65,7 +65,7 @@ export function LocationSelection(props){
     return (
         <ListItemButton onClick={(event) =>props.sLoc == name? null: props.clickEvent(event, name)}
         selected={props.sLoc == name} disableRipple>
-            <ListItemText  secondaryTypographyProps={{ sx: { color: "white" } }}
+            <ListItemText  secondaryTypographyProps={{ sx: { color: "black" } }}
              primary={name}
              secondary={
                 <>
