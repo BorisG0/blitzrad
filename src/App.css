@@ -30,9 +30,6 @@
 }
 
 
-#bodyMainView{
-  height: 90%;
-}
 .fullhight{
   height: 100%;
 }
@@ -42,14 +39,14 @@
 }
 
 .Map-parent{
+  height: 95vh;
   display: flex;
-  height: 100%;
 }
 
 .Map-screen{
   
 }
 
-.Region-selection{
-  
+.Location-selection{
+  width: 25%;
 }

@@ -16,9 +16,11 @@ export function MainView(){
 
     return(
 
-        <div id="bodyMainView" className="Map-parent" style={{height:"100vh"}}>
-          <LocationSelection handleLocationClick={handleLocationClick} selectedLocation={selectedLocation} className="Region-selection"/>
-          <MapScreen className="Map-screen" clickEvent={handleLocationClick}/>
+        <div id="bodyMainView" className="Map-parent">
+            <div className="Location-selection">
+                <LocationSelection handleLocationClick={handleLocationClick} selectedLocation={selectedLocation} />
+            </div>
+            <MapScreen className="Map-screen" clickEvent={handleLocationClick}/>
         </div>
 
     )
