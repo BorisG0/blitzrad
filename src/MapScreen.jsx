@@ -6,7 +6,33 @@ import "leaflet/dist/leaflet.css"
 import L from "leaflet"
 import firebase from "./firebase"
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useMapEvents, useMap } from "react-leaflet";
+
 const firestore = firebase.firestore();
+const userIcon = new L.icon({
+  iconUrl: icon,
+  iconSize: [35, 45]
+})
+
+
+function LocationMarker() {
+  const [position, setPosition] = useState(null)
+  const map = useMapEvents({
+    click() {
+      map.locate()
+    },
+    locationfound(e) {
+      setPosition(e.latlng)
+      map.flyTo(e.latlng, map.getZoom())
+    },
+  })
+
+  return position === null ? null : (
+    <Marker position={position} icon={userIcon}>
+      <Popup>You are here</Popup>
+    </Marker>
+  )
+}
 
 export function MapScreen(props){
     const bikeIcon = new L.icon({
@@ -15,10 +41,7 @@ export function MapScreen(props){
         iconSize: [100,100],
       });
       const userPosition = {lat:49.48, lng: 8.47}
-    const userIcon = new L.icon({
-    iconUrl: icon,
-    iconSize: [35, 45]
-})
+
 
     const [center, setCenter] = useState({ lat:49.479038, lng:8.470520});
     const ZOOM_LEVEL = 14;
@@ -41,6 +64,7 @@ export function MapScreen(props){
     const [locations, setLocations] = useState([]);
 
     return(
+      <>
       <MapContainer 
         center={center}
         zoom={ZOOM_LEVEL}
@@ -53,7 +77,7 @@ export function MapScreen(props){
          {locations.map((location) => (
             <Marker key={location.id} position={[location.location.latitude, location.location.longitude]} icon={bikeIcon}
             eventHandlers={{
-              click: (event) => props.clickEvent(event, location.name),
+              click: (event) => props.clickEvent(event, location.name, location.location.latitude, location.location.long),
             }}>
               <Popup>{location.name}</Popup>
             </Marker>
@@ -64,6 +88,8 @@ export function MapScreen(props){
                 You are here
             </Popup>
         </Marker>
+        <LocationMarker/>
       </MapContainer>
+      </>
     )
   }

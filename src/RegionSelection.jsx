@@ -3,8 +3,6 @@ import { TextField } from '@mui/material';
 
 export function RegionSelection() {
     return (
-        <>
-            <h1>select region</h1>
             <Autocomplete
                 disablePortal
                 id="combo-box-demo"
@@ -12,6 +10,5 @@ export function RegionSelection() {
                 sx={{ width: 300 }}
                 renderInput={(params) => <TextField {...params} label="Region" />}
             />
-        </>
     )
 }

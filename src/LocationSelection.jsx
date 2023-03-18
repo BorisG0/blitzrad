@@ -5,6 +5,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import {DatePicker} from '@mui/x-date-pickers'
 import { getDistance } from 'geolib';
 import firebase from "./firebase";
+import { RegionSelection } from './RegionSelection';
 
 const firestore = firebase.firestore();
 const auth = firebase.auth();
