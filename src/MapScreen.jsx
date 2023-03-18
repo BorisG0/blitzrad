@@ -38,7 +38,7 @@ export function MapScreen(props){
     const bikeIcon = new L.icon({
         iconUrl: testIcon,
         //iconUrl: icon,
-        iconSize: [100,100],
+        iconSize: [128,72],
       });
       const userPosition = {lat:49.48, lng: 8.47}
 
