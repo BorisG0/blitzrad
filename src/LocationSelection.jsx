@@ -1,6 +1,6 @@
 //import * as React from 'react';
 import React, { useState, useEffect, useMemo } from 'react';
-import {List, ListItem, ListItemButton, ListItemText, Button, TextField} from '@mui/material';
+import {List, ListItem, ListItemButton, ListItemText, Button, TextField, ToggleButton, ToggleButtonGroup} from '@mui/material';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import {DatePicker} from '@mui/x-date-pickers'
 import { getDistance } from 'geolib';
@@ -24,6 +24,17 @@ export function LocationSelection(props){
     const query = locationsRef.limit(25);
     const [locations] = useCollectionData(query, {idField: 'id'});
 
+    const [selectedType, setSelectedType] = React.useState("Bike");
+    const handleChange = (event, newSelectedType) => {
+        setSelectedType(newSelectedType);
+      };
+
+    const control = {
+        value: selectedType,
+        onChange: handleChange,
+        exclusive: true,
+    };
+
     const saveBooking = async (e) => {
         e.preventDefault();
     
@@ -44,6 +55,11 @@ export function LocationSelection(props){
     return(
         <div>
             <h2>Location Selection</h2>
+
+            <ToggleButton value="Bike" {...control}>Bike</ToggleButton>
+            <ToggleButton value="E-Bike" {...control}>EBike</ToggleButton>
+            <ToggleButton value="Scooter" {...control}>Scooter</ToggleButton>
+
             <List>
                 {locations && locations.map(l => <LocationDisplay key={l.name} loc={l}
                 clickEvent={props.handleLocationClick} sLoc={props.selectedLocation}
@@ -58,7 +74,7 @@ export function LocationSelection(props){
   function LocationDisplay(props){
     const userPosition = {lat:49.48, lng: 8.47}
 
-    const {id ,name, location} = props.loc;
+    const {id ,name, location, bikeCounter, ebikeCounter, scooterCounter} = props.loc;
     const pos = {lat: location._lat,lng: location._long}
     const dist = getDistance(userPosition, pos);
   
@@ -69,7 +85,7 @@ export function LocationSelection(props){
              primary={name}
              secondary={
                 <>
-                    <>📍 {dist}m</>
+                    <>📍 {dist}m bikes:{bikeCounter}</>
                     <br/>
                     <>{(props.sLoc == name) ? (<>
                     <DatePicker label="end of rental" value={props.selectedDate} onChange={props.handleDateChange}/>
