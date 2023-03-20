@@ -1,6 +1,6 @@
 //import * as React from 'react';
 import React, { useState, useEffect, useMemo } from 'react';
-import {List, ListItem, ListItemButton, ListItemText, Button, TextField, ToggleButton, ToggleButtonGroup} from '@mui/material';
+import {List, ListItem, ListItemButton, ListItemText, Button, ToggleButton, ToggleButtonGroup} from '@mui/material';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import {DatePicker} from '@mui/x-date-pickers'
 import { getDistance } from 'geolib';
@@ -55,10 +55,12 @@ export function LocationSelection(props){
     return(
         <div>
             <h2>Location Selection</h2>
-
-            <ToggleButton value="Bike" {...control}>Bike</ToggleButton>
-            <ToggleButton value="E-Bike" {...control}>EBike</ToggleButton>
-            <ToggleButton value="Scooter" {...control}>Scooter</ToggleButton>
+            <ToggleButtonGroup value={selectedType} onChange={handleChange}>
+                <ToggleButton value="Bike" {...control}>Bike</ToggleButton>
+                <ToggleButton value="E-Bike" {...control}>EBike</ToggleButton>
+                <ToggleButton value="Scooter" {...control}>Scooter</ToggleButton>
+            </ToggleButtonGroup>
+            
 
             <List>
                 {locations && locations.map(l => <LocationDisplay key={l.name} loc={l}
