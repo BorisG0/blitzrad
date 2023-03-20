@@ -25,15 +25,10 @@ export function LocationSelection(props){
     const [locations] = useCollectionData(query, {idField: 'id'});
 
     const [selectedType, setSelectedType] = React.useState("Bike");
-    const handleChange = (newSelectedType) => {
+
+    const handleTypeChange = (event, newSelectedType) => {
         setSelectedType(newSelectedType);
       };
-
-    const control = {
-        value: selectedType,
-        onChange: handleChange,
-        exclusive: true,
-    };
 
     const saveBooking = async (e) => {
         e.preventDefault();
@@ -55,10 +50,10 @@ export function LocationSelection(props){
     return(
         <div>
             <h2>Location Selection</h2>
-            <ToggleButtonGroup value={selectedType} onChange={handleChange}>
-                <ToggleButton value="Bike" {...control}>Bike</ToggleButton>
-                <ToggleButton value="E-Bike" {...control}>EBike</ToggleButton>
-                <ToggleButton value="Scooter" {...control}>Scooter</ToggleButton>
+            <ToggleButtonGroup value={selectedType} exclusive onChange={handleTypeChange}>
+                <ToggleButton value="Bike">Bike</ToggleButton>
+                <ToggleButton value="E-Bike">E-Bike</ToggleButton>
+                <ToggleButton value="Scooter">Scooter</ToggleButton>
             </ToggleButtonGroup>
             
 
@@ -67,6 +62,7 @@ export function LocationSelection(props){
                 clickEvent={props.handleLocationClick} sLoc={props.selectedLocation}
                 saveBooking={saveBooking}
                 selectedDate = {selectedDate} handleDateChange={handleDateChange}
+                selectedType = {selectedType}
                 />)}
             </List>
         </div>
@@ -87,7 +83,10 @@ export function LocationSelection(props){
              primary={name}
              secondary={
                 <>
-                    <>📍 {dist}m bikes:{bikeCounter}</>
+                    <>📍 {dist}m</>
+                    {props.selectedType == "Bike"? <> bikes: {bikeCounter}</>: null}
+                    {props.selectedType == "E-Bike"? <> e-bikes: {ebikeCounter}</>: null}
+                    {props.selectedType == "Scooter"? <> scooters: {scooterCounter}</>: null}
                     <br/>
                     <>{(props.sLoc == name) ? (<>
                     <DatePicker label="end of rental" value={props.selectedDate} onChange={props.handleDateChange}/>
