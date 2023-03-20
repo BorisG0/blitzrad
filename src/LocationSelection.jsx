@@ -39,7 +39,7 @@ export function LocationSelection(props){
         await bookingsRef.add({
           bookedAt: firebase.firestore.FieldValue.serverTimestamp(),
           uId: uid,
-          type: "Bike",
+          type: selectedType,
           location: props.selectedLocation,
           rentStart: firebase.firestore.FieldValue.serverTimestamp(),
           rentEnd: rentEndTimestamp
