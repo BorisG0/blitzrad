@@ -37,13 +37,17 @@ function qrCode(url) {
         />)
 }
 const auth = firebase.auth();
-export function getNiceDate(date) {
+export function getNiceDate(date, withTime) {
     let dd = date.toDate().getDate()
-    let mm = date.toDate().getMonth()
+    let mm = date.toDate().getMonth()+1
     let yyyy = date.toDate().getFullYear()
     let hh = date.toDate().getHours()
     let minmin = date.toDate().getMinutes()
-    return dd + "." + mm + "." + yyyy + " " + hh + ":" + minmin
+    if(withTime){
+        return dd + "." + mm + "." + yyyy + " " + hh + ":" + minmin
+    }else{
+        return dd + "." + mm + "." + yyyy
+    }
 }
 export function Account() {
     const [query, setQuery] = useState()
@@ -77,22 +81,22 @@ export function Account() {
                                         Booked at:
                                     </Grid2>
                                     <Grid2 xs={6}>
-                                        {getNiceDate(booking.data().bookedAt)}
+                                        {getNiceDate(booking.data().bookedAt, true)}
                                     </Grid2>
                                     <Grid2 xs={6}>
-                                        Rent start
+                                        Rent start:
                                     </Grid2>
                                     <Grid2 xs={6}>
-                                        {getNiceDate(booking.data().rentStart)}
+                                        {getNiceDate(booking.data().rentStart, false)}
                                     </Grid2>
                                     <Grid2 xs={6}>
-                                        Rent end
+                                        Rent end:
                                     </Grid2>
                                     <Grid2 xs={6}>
-                                        {getNiceDate(booking.data().rentEnd)}
+                                        {getNiceDate(booking.data().rentEnd, false)}
                                     </Grid2>
                                     <Grid2 xs={6}>
-                                        Type
+                                        Type:
                                     </Grid2>
                                     <Grid2 xs={6}>
                                         {booking.data().type}

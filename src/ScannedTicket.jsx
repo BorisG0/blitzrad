@@ -37,10 +37,13 @@ export function ScannedTicket() {
                 Location: {value.data().location}
               </Typography>
               <Typography sx={{ mb: 1.5 }} >
-                Start date: {getNiceDate(value.data().rentStart)}
+                Booked at: {getNiceDate(value.data().rentStart, true)}
               </Typography>
               <Typography sx={{ mb: 1.5 }} >
-                End date: {getNiceDate(value.data().rentEnd)}
+                Start date: {getNiceDate(value.data().rentStart, false)}
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} >
+                End date: {getNiceDate(value.data().rentEnd, false)}
               </Typography>
               <Typography sx={{ mb: 1.5 }} >
                 Type: {value.data().type}
