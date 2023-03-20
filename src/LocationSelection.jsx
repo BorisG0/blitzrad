@@ -25,7 +25,7 @@ export function LocationSelection(props){
     const [locations] = useCollectionData(query, {idField: 'id'});
 
     const [selectedType, setSelectedType] = React.useState("Bike");
-    const handleChange = (event, newSelectedType) => {
+    const handleChange = (newSelectedType) => {
         setSelectedType(newSelectedType);
       };
 
@@ -44,12 +44,12 @@ export function LocationSelection(props){
         await bookingsRef.add({
           bookedAt: firebase.firestore.FieldValue.serverTimestamp(),
           uId: uid,
-          //uId: "test user",
           type: "Bike",
           location: props.selectedLocation,
           rentStart: firebase.firestore.FieldValue.serverTimestamp(),
           rentEnd: rentEndTimestamp
         })
+        setSelectedDate(null);
       }
 
     return(
