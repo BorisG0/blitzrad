@@ -59,7 +59,7 @@ export function NavBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
+console.log(user)
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -114,9 +114,10 @@ export function NavBar() {
                 <MenuItem component={Link} to="/aboutus" onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">About us</Typography>
                 </MenuItem>
+                {user && user.uid =="crW5255058ReQgNMrQ9R3eks7Op1" ?
                 <MenuItem component={Link} to="/admin" onClick={handleCloseNavMenu}>
                   <Typography textAlign="center"> Admin Settings</Typography>
-                </MenuItem>
+                </MenuItem> : null}
             </Menu>
           </Box>
           <Typography
@@ -144,12 +145,13 @@ export function NavBar() {
               >
                 About us
               </Button>
+              {user && user.uid =="crW5255058ReQgNMrQ9R3eks7Op1" ?
               <Button component={Link} to="/admin"
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 Admin Seetings
-              </Button>
+              </Button> : null}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
