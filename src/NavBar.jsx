@@ -111,11 +111,12 @@ export function NavBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem component={Link} to="/aboutus" key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem component={Link} to="/aboutus" onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">About us</Typography>
                 </MenuItem>
-              ))}
+                <MenuItem component={Link} to="/admin" onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center"> Admin Settings</Typography>
+                </MenuItem>
             </Menu>
           </Box>
           <Typography
@@ -137,15 +138,18 @@ export function NavBar() {
             ⚡Blitzrad⚡
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
               <Button component={Link} to="/aboutus"
-                key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                About us
               </Button>
-            ))}
+              <Button component={Link} to="/admin"
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                Admin Seetings
+              </Button>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

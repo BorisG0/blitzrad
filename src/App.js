@@ -10,6 +10,7 @@ import { Payment } from './Payment';
 import { ScannedTicket } from './ScannedTicket';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { Admin } from './Admin';
 
 
 function App() {
@@ -26,8 +27,7 @@ function App() {
             <Route path="/account" element={<Account />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/scanned/:id" element={<ScannedTicket/>}/>
-
-
+            <Route path="/admin" element={<Admin/>}/>
         </Routes>
       </LocalizationProvider>
       
