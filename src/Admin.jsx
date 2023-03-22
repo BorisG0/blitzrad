@@ -7,13 +7,19 @@ import {
     Box
 } from "@mui/material";
 import { useState } from "react";
+import { Navigate } from 'react-router-dom'
+import { useAuthState } from "react-firebase-hooks/auth";
+
 
 export function Admin() {
     const [eBikePrice, setEBikePrice] = useState(null);
     const [bikePrice, setBikePrice] = useState(null);
     const [scooterPrice, setScooterPrice] = useState(null);
     const [isAllowed, setIsAllowed] = useState(true);
+
     const firestore = firebase.firestore();
+    const auth = firebase.auth();
+    const [user] = useAuthState(auth);
 
     const vehilcesRef = firestore.collection('vehicles');
     const query = vehilcesRef.limit(25);
@@ -26,6 +32,9 @@ export function Admin() {
     if (vehicles && scooterPrice == null && bikePrice == null && eBikePrice == null) {
         setValues();
     }
+    if(user && !user.email.includes("@grabowski.com")){
+        return <Navigate to="/"/>
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -37,13 +46,13 @@ export function Admin() {
             });
             await updateDoc(eBikeRef, {
                 price: eBikePrice
-            }); 
+            });
         } catch (error) {
             setIsAllowed(false);
-            return(
-            <>
-                <div> ne </div>
-            </>
+            return (
+                <>
+                    <div> ne </div>
+                </>
             )
         }
 
