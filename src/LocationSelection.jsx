@@ -98,6 +98,11 @@ export function LocationSelection(props){
     const dist = getDistance(userPosition, pos);
   
     return (
+        <>
+        {((props.selectedType == "Bike") && bikeCounter > 0)
+        || ((props.selectedType == "E-Bike") && ebikeCounter > 0)
+        || ((props.selectedType == "Scooter") && scooterCounter > 0)?
+        
         <ListItemButton onClick={(event) =>props.sLoc == name? null: props.clickEvent(event, name)}
         selected={props.sLoc == name} disableRipple>
             <ListItemText  secondaryTypographyProps={{ sx: { color: "black" } }}
@@ -118,6 +123,7 @@ export function LocationSelection(props){
                     </>): null}</>
                 </>
              }/>
-        </ListItemButton>
+        </ListItemButton> : null}
+        </>
     )
   }
