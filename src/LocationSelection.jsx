@@ -49,9 +49,20 @@ export function LocationSelection(props){
             rentEnd: rentEndTimestamp
             })
 
+            if(selectedType == "Bike")
             await selectedLocationRef.update({
                 bikeCounter: firebase.firestore.FieldValue.increment(-1)
-            });      
+            });
+
+            if(selectedType == "E-Bike")
+            await selectedLocationRef.update({
+                ebikeCounter: firebase.firestore.FieldValue.increment(-1)
+            });
+
+            if(selectedType == "Scooter")
+            await selectedLocationRef.update({
+                scooterCounter: firebase.firestore.FieldValue.increment(-1)
+            });
 
             setSelectedDate(null);
         }
