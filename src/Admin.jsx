@@ -1,36 +1,113 @@
 import firebase from "./firebase";
 import { useCollectionData, useCollection } from "react-firebase-hooks/firestore";
 import { doc, updateDoc } from "firebase/firestore";
-
+import {
+    TextField,
+    Button,
+    Box
+} from "@mui/material";
+import { useState } from "react";
 
 export function Admin() {
+    const [eBikePrice, setEBikePrice] = useState(null);
+    const [bikePrice, setBikePrice] = useState(null);
+    const [scooterPrice, setScooterPrice] = useState(null);
+    const [isAllowed, setIsAllowed] = useState(true);
     const firestore = firebase.firestore();
-
-    const auth = firebase.auth();
 
     const vehilcesRef = firestore.collection('vehicles');
     const query = vehilcesRef.limit(25);
-    const [vehicles] = useCollection(query, {idField: 'id'});
+    const [vehicles, loading, error] = useCollection(query, { idField: 'id' });
 
-    const testRef = doc(firestore, "vehicles", "scooter");
+    const scooterRef = doc(firestore, "vehicles", "scooter");
+    const bikeRef = doc(firestore, "vehicles", "bike");
+    const eBikeRef = doc(firestore, "vehicles", "eBike");
 
-    //const { uid } = auth.currentUser;
-    const changePrice = async (e) => {
-        /*e.preventDefault();
+    if (vehicles && scooterPrice == null && bikePrice == null && eBikePrice == null) {
+        setValues();
+    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await updateDoc(scooterRef, {
+                price: scooterPrice
+            });
+            await updateDoc(bikeRef, {
+                price: bikePrice
+            });
+            await updateDoc(eBikeRef, {
+                price: eBikePrice
+            }); 
+        } catch (error) {
+            setIsAllowed(false);
+            return(
+            <>
+                <div> ne </div>
+            </>
+            )
+        }
 
-        await vehilcesRef.add({
-          type: "testtype",
-          price: 10,
-        })*/
-        await updateDoc(testRef, {
-            price: 17
-          });
-      }
-    return(
-        <div>
-            admin
-            {vehicles && vehicles.docs.map(v => <div key={v.id}>{v.id} {v.data().price} </div>)}
-            <button onClick={changePrice}> change price</button>
-        </div>
+    }
+    const resetValues = () => {
+        setValues();
+    }
+    function setValues() {
+        for (let i = 0; i < vehicles.docs.length; i++) {
+            if (vehicles.docs[i].id == "scooter") {
+                setScooterPrice(vehicles.docs[i].data().price);
+            }
+            if (vehicles.docs[i].id == "bike") {
+                setBikePrice(vehicles.docs[i].data().price);
+            }
+            if (vehicles.docs[i].id == "eBike") {
+                setEBikePrice(vehicles.docs[i].data().price);
+            }
+        }
+    }
+    return (
+        <>
+            {error && <strong>Error: {JSON.stringify(error)}</strong>}
+            {loading && <span>Collection: Loading...</span>}
+            {!isAllowed && <div> Looks like you are not allowed to be here </div>}
+            {vehicles && isAllowed && <>
+                <h3>Prices</h3>
+                <form onSubmit={handleSubmit}>
+                    <TextField
+                        style={{ width: "200px", margin: "5px" }}
+                        type="number"
+                        label="E-Bike"
+                        variant="outlined"
+                        value={eBikePrice}
+                        onChange={(e) => setEBikePrice(e.target.value)}
+                    />
+                    <br />
+                    <TextField
+                        style={{ width: "200px", margin: "5px" }}
+                        type="number"
+                        label="Bike"
+                        variant="outlined"
+                        value={bikePrice}
+                        onChange={(e) => setBikePrice(e.target.value)}
+                    />
+                    <br />
+                    <TextField
+                        style={{ width: "200px", margin: "5px" }}
+                        type="number"
+                        label="Scooter"
+                        variant="outlined"
+                        value={scooterPrice}
+                        onChange={(e) => setScooterPrice(e.target.value)}
+                    />
+                    <br />
+                    <Button type='submit' variant="contained" color="primary" style={{ margin: "5px" }}>
+                        save
+                    </Button>
+                    <Button variant="contained" color="primary" onClick={resetValues}>
+                        reset
+                    </Button>
+                </form>
+            </>
+            }
+        </>
     )
 }
