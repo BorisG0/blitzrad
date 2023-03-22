@@ -36,15 +36,25 @@ export function LocationSelection(props){
         const { uid } = auth.currentUser;
         const rentEndTimestamp = firebase.firestore.Timestamp.fromDate(new Date(selectedDate));
 
-        await bookingsRef.add({
-          bookedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          uId: uid,
-          type: selectedType,
-          location: props.selectedLocation,
-          rentStart: firebase.firestore.FieldValue.serverTimestamp(),
-          rentEnd: rentEndTimestamp
-        })
-        setSelectedDate(null);
+        const querySnapshot = await locationsRef.where('name', '==', props.selectedLocation).get();
+        if (!querySnapshot.empty) {
+            const selectedLocationRef = querySnapshot.docs[0].ref;
+        
+            await bookingsRef.add({
+            bookedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            uId: uid,
+            type: selectedType,
+            location: props.selectedLocation,
+            rentStart: firebase.firestore.FieldValue.serverTimestamp(),
+            rentEnd: rentEndTimestamp
+            })
+
+            await selectedLocationRef.update({
+                bikeCounter: firebase.firestore.FieldValue.increment(-1)
+            });      
+
+            setSelectedDate(null);
+        }
       }
 
     return(
