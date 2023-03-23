@@ -3,8 +3,13 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
+import firebase from "./firebase";
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { useState } from 'react';
+
 
 export function AboutUs(){
+ 
       return (
           <>
             <ProdcutImageList/>
@@ -62,6 +67,7 @@ export function AboutUs(){
         },
     ]
 function BasicInformation(){
+  
     return(
         <>
             <h1>Unsere Mission</h1>
@@ -69,19 +75,50 @@ function BasicInformation(){
                 Das Mobilitätserlebnis soll für unsere Kunden perfekt sein. Also wenn ihr irgendwelche Wünsche habt,
                 könnt ihr euch gerne bei uns melden. Aktuell probieren wir unsere Flotte zu erweitern und
                 mehr Standorte zu eröffnen. Melde dich, wenn wir auch in deine Gegend kommen sollen.
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-                ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-                 et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum
-                  dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore 
-                  magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-                   clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.  </p>
+                </p>
         </>
     )
 }
 
     function ProdcutImageList(){
         const matches = useMediaQuery('(min-width:600px)');
-
+        const firestore = firebase.firestore();
+        const vehilcesRef = firestore.collection('vehicles');
+        const query = vehilcesRef.limit(25);
+        const [vehicles, loading, error] = useCollection(query, { idField: 'id' });
+        
+        const [eBikePrice, setEBikePrice] = useState(null);
+        const [bikePrice, setBikePrice] = useState(null);
+        const [scooterPrice, setScooterPrice] = useState(null);
+        if (vehicles && scooterPrice == null && bikePrice == null && eBikePrice == null) {
+          for (let i = 0; i < vehicles.docs.length; i++) {
+            if (vehicles.docs[i].id == "scooter") {
+                setScooterPrice(vehicles.docs[i].data().price);
+            }
+            if (vehicles.docs[i].id == "bike") {
+                setBikePrice(vehicles.docs[i].data().price);
+            }
+            if (vehicles.docs[i].id == "eBike") {
+                setEBikePrice(vehicles.docs[i].data().price);
+            }
+        }}
+        const productData = [
+          {
+            img: 'https://cdn.pixabay.com/photo/2013/07/13/13/43/racing-bicycle-161449_960_720.png',
+            vehicle: 'Bicycle',
+            price: bikePrice + '€/day',
+          },
+          {
+            img: 'https://cdn.pixabay.com/photo/2021/07/31/19/36/electric-scooters-6512899_960_720.jpg',
+            vehicle: 'Scooter',
+            price: scooterPrice + '€/day',
+          },
+          {
+            img: 'https://cdn.pixabay.com/photo/2016/07/20/20/46/electric-mountain-bike-1531262_960_720.jpg',
+            vehicle: 'E-Bike',
+            price: eBikePrice + '€/day',
+          },
+        ];
         return (
             <>
             <h1> Unsere Produkte </h1>
@@ -105,23 +142,7 @@ function BasicInformation(){
             </>
           );
     }
-    const productData = [
-      {
-        img: 'https://cdn.pixabay.com/photo/2013/07/13/13/43/racing-bicycle-161449_960_720.png',
-        vehicle: 'Bicycle',
-        price: '15€/day',
-      },
-      {
-        img: 'https://cdn.pixabay.com/photo/2021/07/31/19/36/electric-scooters-6512899_960_720.jpg',
-        vehicle: 'Scooter',
-        price: '20€/day',
-      },
-      {
-        img: 'https://cdn.pixabay.com/photo/2016/07/20/20/46/electric-mountain-bike-1531262_960_720.jpg',
-        vehicle: 'E-Bike',
-        price: '25€/day',
-      },
-    ];
+
 
 
     
