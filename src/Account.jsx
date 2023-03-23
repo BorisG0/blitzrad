@@ -58,7 +58,7 @@ export function Account() {
     } else if (user) {
         const bookingsRef = firestore.collection('bookings');
         if (query == undefined) {
-            setQuery(bookingsRef.where("uId", "==", user.uid));//.orderBy("bookedAt", "desc"))
+            setQuery(bookingsRef.orderBy("bookedAt", "desc"));
         }
         return (
             <>
@@ -67,6 +67,8 @@ export function Account() {
                 </Typography>
                 <List id="test" sx={{ position: "center" }}  >
                     {bookings && bookings.docs.map(booking =>
+                    <>
+                    {(user && user.uid == booking.data().uId)?
                         <ListItem key={booking.id} sx={{ border: 0.5, textAlign: "center" }}>
                             <Grid2 container >
 
@@ -108,6 +110,8 @@ export function Account() {
                             </Grid2>
                             <Button component={Link} to={`/scanned/${booking.id}`}> mein Button </Button>
                         </ListItem>
+                        : null}
+                        </>
                     )}
                 </List>
             </>
