@@ -5,7 +5,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import {DatePicker} from '@mui/x-date-pickers'
 import { getDistance } from 'geolib';
 import firebase from "./firebase";
-import { RegionSelection } from './RegionSelection';
+import {PayPalScriptProvider, PayPalButtons} from '@paypal/react-paypal-js';
 
 const firestore = firebase.firestore();
 const auth = firebase.auth();
@@ -16,6 +16,12 @@ export function LocationSelection(props){
     const bookingsRef = firestore.collection('bookings');
 
     const [selectedDate, setSelectedDate] = React.useState(null);
+
+    const paypalOptions = {
+        "client-id": "AdCgq612duLsoz1YMIH8B4tSNBpWtJtlfXE0TZ1wGIegRuDKc7Sg1Y95gq7Z_24rlieuHC6pKsbrWgzi", 
+        "currency": "EUR"
+    }
+    const [showPayPal, setShowPayPal] = useState(false);
 
     const handleDateChange = (date) => {
       setSelectedDate(date);
@@ -29,6 +35,13 @@ export function LocationSelection(props){
     const handleTypeChange = (event, newSelectedType) => {
         setSelectedType(newSelectedType);
       };
+
+    const handleBooking = () => {
+        //create a paypal payment popup
+        setShowPayPal(true)
+
+        //saveBooking();
+    }
 
     const saveBooking = async (e) => {
         e.preventDefault();
@@ -70,6 +83,33 @@ export function LocationSelection(props){
 
     return(
         <div>
+            
+
+            {showPayPal && (
+                <>
+            <h2>Checkout</h2>
+                <PayPalScriptProvider options={paypalOptions}>
+                    <PayPalButtons           createOrder={(data, actions) => {
+                        return actions.order.create({
+                        purchase_units: [
+                            {            
+                            amount: {
+                                value: "13.99",
+                            },
+                            },
+                        ],
+                        });
+                    }}
+                    onApprove={async (data, actions) => {
+                        const details = await actions.order.capture();
+                        const name = details.payer.name.given_name;
+                        alert("Transaction completed by " + name);
+                    }}/>
+                </PayPalScriptProvider>
+            </>)}
+
+            {!showPayPal && (<>
+
             <h2>Location Selection</h2>
             <ToggleButtonGroup value={selectedType} exclusive onChange={handleTypeChange}>
                 <ToggleButton value="Bike">Bike</ToggleButton>
@@ -81,11 +121,11 @@ export function LocationSelection(props){
             <List>
                 {locations && locations.map(l => <LocationDisplay key={l.name} loc={l}
                 clickEvent={props.handleLocationClick} sLoc={props.selectedLocation}
-                saveBooking={saveBooking}
+                handleBooking={handleBooking}
                 selectedDate = {selectedDate} handleDateChange={handleDateChange}
                 selectedType = {selectedType}
                 />)}
-            </List>
+            </List></>)}
         </div>
     )
   }
@@ -118,7 +158,7 @@ export function LocationSelection(props){
                     <DatePicker label="end of rental" value={props.selectedDate} onChange={props.handleDateChange}/>
                     <br/>
 
-                    {props.selectedDate ? <Button variant="contained" onClick={props.saveBooking}>book</Button>: null}
+                    {props.selectedDate ? <Button variant="contained" onClick={props.handleBooking}>book</Button>: null}
                     
                     </>): null}</>
                 </>
