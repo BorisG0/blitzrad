@@ -44,7 +44,7 @@ export function LocationSelection(props){
     }
 
     const saveBooking = async (e) => {
-        e.preventDefault();
+        //e.preventDefault();
     
         const { uid } = auth.currentUser;
         const rentEndTimestamp = firebase.firestore.Timestamp.fromDate(new Date(selectedDate));
@@ -79,6 +79,9 @@ export function LocationSelection(props){
 
             setSelectedDate(null);
         }
+        
+        setShowPayPal(false);
+        alert("Booking successful!")
       }
 
     return(
@@ -104,6 +107,7 @@ export function LocationSelection(props){
                         const details = await actions.order.capture();
                         const name = details.payer.name.given_name;
                         alert("Transaction completed by " + name);
+                        saveBooking();
                     }}/>
                 </PayPalScriptProvider>
             </>)}
