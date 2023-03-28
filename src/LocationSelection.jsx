@@ -1,7 +1,7 @@
 //import * as React from 'react';
 import React, { useState, useEffect, useMemo } from 'react';
 import {List, ListItem, ListItemButton, ListItemText, Button, ToggleButton, ToggleButtonGroup} from '@mui/material';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useCollectionData, useCollection } from 'react-firebase-hooks/firestore';
 import {DatePicker} from '@mui/x-date-pickers'
 import { getDistance } from 'geolib';
 import firebase from "./firebase";
@@ -24,7 +24,8 @@ export function LocationSelection(props){
     }
     const [showPayPal, setShowPayPal] = useState(false);
 
-    let diffDays = 0;
+    const [diffDays, setDiffDays] = useState(0);
+    const [calculatedPrice, setCalculatedPrice] = useState(0);
 
     const handleDateChange = (date) => {
       setSelectedDate(date);
@@ -33,10 +34,34 @@ export function LocationSelection(props){
         //get the difference between the two dates
         const diffTime = Math.abs(date - today);
         //convert the difference to days
-        diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-        console.log(diffDays)
+        const diffDaysTemp = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        setDiffDays(diffDaysTemp);
     }
+
+    const calculatePrice = async () => {
+        const querySnapshot = await pricingRef.where('type', '==', selectedType).get();
+        if (!querySnapshot.empty) {
+            const selectedPricingRef = querySnapshot.docs[0].ref;
+            const selectedPricingDoc = await selectedPricingRef.get();
+            const pricePerDay = selectedPricingDoc.data().pricePerDay;
+            const basePrice = selectedPricingDoc.data().basePrice;
+            const calculatedPriceTemp = basePrice + (pricePerDay * diffDays);
+
+            console.log("basePrice: " + basePrice + " pricePerDay: " + pricePerDay + " diffDays: " + diffDays + " calculatedPrice: " + calculatedPriceTemp);
+            setCalculatedPrice(calculatedPriceTemp);
+        }
+    }
+
+    useEffect(() => {
+        console.log('diffDays changed:', diffDays);
+        // const querySnapshot = pricingRef.where('type', '==', selectedType).get();
+        // if (!querySnapshot.empty) {
+        //     const selectedPricingRef = querySnapshot.docs[0].ref;
+        //     const price = selectedPricingRef.pricePerDay;
+        //     setCalculatedPrice(price * diffDays);
+        // }
+        calculatePrice();
+      }, [diffDays]);
 
     const query = locationsRef.limit(25);
     const [locations] = useCollectionData(query, {idField: 'id'});
@@ -51,6 +76,7 @@ export function LocationSelection(props){
     const handleBooking = () => {
         //create a paypal payment popup
         setShowPayPal(true)
+        console.log("diffdays from handleBooking: " + diffDays)
 
         //saveBooking();
     }
@@ -107,6 +133,7 @@ export function LocationSelection(props){
                 selected location: {props.selectedLocation} <br/>
                 selected type: {selectedType} <br/>
                 number of days: {diffDays} <br/>
+                calculated price: {calculatedPrice} <br/>
             </p>
                 <PayPalScriptProvider options={paypalOptions}>
                     <PayPalButtons           createOrder={(data, actions) => {
@@ -114,7 +141,7 @@ export function LocationSelection(props){
                         purchase_units: [
                             {            
                             amount: {
-                                value: "13.99",
+                                value: calculatedPrice,
                             },
                             },
                         ],
