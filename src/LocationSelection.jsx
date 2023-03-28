@@ -24,8 +24,18 @@ export function LocationSelection(props){
     }
     const [showPayPal, setShowPayPal] = useState(false);
 
+    let diffDays = 0;
+
     const handleDateChange = (date) => {
       setSelectedDate(date);
+      //get todays date
+        const today = new Date();
+        //get the difference between the two dates
+        const diffTime = Math.abs(date - today);
+        //convert the difference to days
+        diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        console.log(diffDays)
     }
 
     const query = locationsRef.limit(25);
@@ -96,6 +106,7 @@ export function LocationSelection(props){
             <p>
                 selected location: {props.selectedLocation} <br/>
                 selected type: {selectedType} <br/>
+                number of days: {diffDays} <br/>
             </p>
                 <PayPalScriptProvider options={paypalOptions}>
                     <PayPalButtons           createOrder={(data, actions) => {

@@ -59,7 +59,7 @@ export function NavBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-console.log(user)
+//console.log(user)
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
