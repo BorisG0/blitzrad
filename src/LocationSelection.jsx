@@ -97,7 +97,8 @@ export function LocationSelection(props){
             type: selectedType,
             location: props.selectedLocation,
             rentStart: firebase.firestore.FieldValue.serverTimestamp(),
-            rentEnd: rentEndTimestamp
+            rentEnd: rentEndTimestamp,
+            pricePaid : calculatedPrice
             })
 
             if(selectedType == "Bike")
