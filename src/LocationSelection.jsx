@@ -14,6 +14,7 @@ const auth = firebase.auth();
 export function LocationSelection(props){
     const locationsRef = firestore.collection('locations');
     const bookingsRef = firestore.collection('bookings');
+    const pricingRef = firestore.collection('pricing');
 
     const [selectedDate, setSelectedDate] = React.useState(null);
 
@@ -29,6 +30,7 @@ export function LocationSelection(props){
 
     const query = locationsRef.limit(25);
     const [locations] = useCollectionData(query, {idField: 'id'});
+    const [pricing] = useCollectionData(pricingRef, {idField: 'id'});
 
     const [selectedType, setSelectedType] = React.useState("Bike");
 
@@ -91,6 +93,10 @@ export function LocationSelection(props){
             {showPayPal && (
                 <>
             <h2>Checkout</h2>
+            <p>
+                selected location: {props.selectedLocation} <br/>
+                selected type: {selectedType} <br/>
+            </p>
                 <PayPalScriptProvider options={paypalOptions}>
                     <PayPalButtons           createOrder={(data, actions) => {
                         return actions.order.create({
