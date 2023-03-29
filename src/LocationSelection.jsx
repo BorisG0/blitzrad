@@ -7,12 +7,15 @@ import { getDistance } from 'geolib';
 import firebase from "./firebase";
 import {PayPalScriptProvider, PayPalButtons} from '@paypal/react-paypal-js';
 import { sendThisMail } from './SendMail';
+import { Snackbar } from '@mui/material';
 
 const firestore = firebase.firestore();
 const auth = firebase.auth();
 
 
 export function LocationSelection(props){
+    const [snackBarOpen, setSnackBarOpen] = React.useState(false);
+
     const locationsRef = firestore.collection('locations');
     const bookingsRef = firestore.collection('bookings');
     const pricingRef = firestore.collection('pricing');
@@ -122,12 +125,22 @@ export function LocationSelection(props){
         
         setShowPayPal(false);
         sendThisMail(auth.currentUser, calculatedPrice)
-        alert("Booking successful!")
+        setSnackBarOpen(true);
       }
 
     return(
         <div>
-            
+            <Snackbar
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "center"
+                }}
+                open={snackBarOpen}
+                onClose={() => setSnackBarOpen(false)}
+                autoHideDuration={4000}
+                message="Booking successful!"
+
+              />
 
             {showPayPal && (
                 <>
@@ -152,8 +165,6 @@ export function LocationSelection(props){
                     }}
                     onApprove={async (data, actions) => {
                         const details = await actions.order.capture();
-                        const name = details.payer.name.given_name;
-                        alert("Transaction completed by " + name);
                         saveBooking();
                     }}/>
                 </PayPalScriptProvider>
