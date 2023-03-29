@@ -48,6 +48,9 @@ export function ScannedTicket() {
               <Typography sx={{ mb: 1.5 }} >
                 Type: {value.data().type}
               </Typography>
+              <Typography sx={{ mb: 1.5 }} >
+                Price: {value.data().pricePaid},00€
+              </Typography>
             </CardContent>
           </Card>
         </>
