@@ -58,12 +58,6 @@ export function LocationSelection(props){
 
     useEffect(() => {
         console.log('diffDays changed:', diffDays);
-        // const querySnapshot = pricingRef.where('type', '==', selectedType).get();
-        // if (!querySnapshot.empty) {
-        //     const selectedPricingRef = querySnapshot.docs[0].ref;
-        //     const price = selectedPricingRef.pricePerDay;
-        //     setCalculatedPrice(price * diffDays);
-        // }
         calculatePrice();
       }, [diffDays]);
 
@@ -86,8 +80,6 @@ export function LocationSelection(props){
     }
 
     const saveBooking = async (e) => {
-        //e.preventDefault();
-    
         const { uid } = auth.currentUser;
         const rentEndTimestamp = firebase.firestore.Timestamp.fromDate(new Date(selectedDate));
 
@@ -149,7 +141,7 @@ export function LocationSelection(props){
                 selected location: {props.selectedLocation} <br/>
                 selected type: {selectedType} <br/>
                 number of days: {diffDays} <br/>
-                calculated price: {calculatedPrice} <br/>
+                calculated price: {calculatedPrice},00€ <br/>
             </p>
                 <PayPalScriptProvider options={paypalOptions}>
                     <PayPalButtons           createOrder={(data, actions) => {
