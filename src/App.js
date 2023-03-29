@@ -6,7 +6,6 @@ import { Routes, Route } from 'react-router-dom';
 import { NavBar } from './NavBar';
 import { AboutUs } from './AboutUs';
 import { Account } from './Account';
-import { Payment } from './Payment';
 import { ScannedTicket } from './ScannedTicket';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -25,7 +24,6 @@ function App() {
             <Route path="/region" element={<RegionSelection />} />
             <Route path="/aboutus" element={<AboutUs />} />
             <Route path="/account" element={<Account />} />
-            <Route path="/payment" element={<Payment />} />
             <Route path="/scanned/:id" element={<ScannedTicket/>}/>
             <Route path="/admin" element={<Admin/>}/>
         </Routes>

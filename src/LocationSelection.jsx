@@ -6,6 +6,7 @@ import {DatePicker} from '@mui/x-date-pickers'
 import { getDistance } from 'geolib';
 import firebase from "./firebase";
 import {PayPalScriptProvider, PayPalButtons} from '@paypal/react-paypal-js';
+import { sendThisMail } from './SendMail';
 
 const firestore = firebase.firestore();
 const auth = firebase.auth();
@@ -120,6 +121,7 @@ export function LocationSelection(props){
         }
         
         setShowPayPal(false);
+        sendThisMail(auth.currentUser, calculatedPrice)
         alert("Booking successful!")
       }
 
