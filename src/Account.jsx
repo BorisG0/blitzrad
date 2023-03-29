@@ -103,6 +103,12 @@ export function Account() {
                                     <Grid2 xs={6}>
                                         {booking.data().type}
                                     </Grid2>
+                                    <Grid2 xs={6}>
+                                        Price:
+                                    </Grid2>
+                                    <Grid2 xs={6}>
+                                        {booking.data().pricePaid},00€
+                                    </Grid2>
                                 </Grid2>
                                 <Grid2 xs={6} >
                                     {otherQrCode("https://hackernoon.com/how-to-build-a-qr-code-generator-in-react")}
