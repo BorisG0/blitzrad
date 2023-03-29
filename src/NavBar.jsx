@@ -156,7 +156,7 @@ export function NavBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {user ? user.displayName.charAt(0) : "?"}
+                {user ? user.displayName : "?"}
                 {/*<Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />*/}
               </IconButton>
             </Tooltip>
