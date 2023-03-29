@@ -150,7 +150,7 @@ export function NavBar() {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                Admin Seetings
+                Admin Settings
               </Button> : null}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
