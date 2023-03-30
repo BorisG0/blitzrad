@@ -21,15 +21,15 @@ export function Admin() {
     const auth = firebase.auth();
     const [user] = useAuthState(auth);
 
-    const vehilcesRef = firestore.collection('vehicles');
-    const query = vehilcesRef.limit(25);
-    const [vehicles, loading, error] = useCollection(query, { idField: 'id' });
+    const pricesRef = firestore.collection('pricing');
+    const query = pricesRef.limit(25);
+    const [prices, loading, error] = useCollectionData(query, { idField: 'id' });
 
-    const scooterRef = doc(firestore, "vehicles", "scooter");
-    const bikeRef = doc(firestore, "vehicles", "bike");
-    const eBikeRef = doc(firestore, "vehicles", "eBike");
+    const scooterRef = doc(firestore, "pricing", "UjgaUU4ReJ4dvRvZdQwJ");//scooter
+    const bikeRef = doc(firestore, "pricing", "VzLXRDeAshGMursG1W0o");//bike
+    const eBikeRef = doc(firestore, "pricing", "JpJ0w6lAbC16iZutkr9v");//eBike
 
-    if (vehicles && scooterPrice == null && bikePrice == null && eBikePrice == null) {
+    if (prices && scooterPrice == null && bikePrice == null && eBikePrice == null) {
         setValues();
     }
     if(user && !user.email.includes("@grabowski.com")){
@@ -39,13 +39,13 @@ export function Admin() {
         e.preventDefault();
         try {
             await updateDoc(scooterRef, {
-                price: scooterPrice
+                basePrice: scooterPrice
             });
             await updateDoc(bikeRef, {
-                price: bikePrice
+                basePrice: bikePrice
             });
             await updateDoc(eBikeRef, {
-                price: eBikePrice
+                basePrice: eBikePrice
             });
         } catch (error) {
             setIsAllowed(false);
@@ -61,15 +61,17 @@ export function Admin() {
         setValues();
     }
     function setValues() {
-        for (let i = 0; i < vehicles.docs.length; i++) {
-            if (vehicles.docs[i].id == "scooter") {
-                setScooterPrice(vehicles.docs[i].data().price);
+        for (let i = 0; i < prices.length; i++) {
+            console.log(prices[i].type)
+            if (prices[i].type == "Scooter") {
+
+                setScooterPrice(prices[i].basePrice);
             }
-            if (vehicles.docs[i].id == "bike") {
-                setBikePrice(vehicles.docs[i].data().price);
+            if (prices[i].type == "Bike") {
+                setBikePrice(prices[i].basePrice);
             }
-            if (vehicles.docs[i].id == "eBike") {
-                setEBikePrice(vehicles.docs[i].data().price);
+            if (prices[i].type == "E-Bike") {
+                setEBikePrice(prices[i].basePrice);
             }
         }
     }
@@ -78,7 +80,7 @@ export function Admin() {
             {error && <strong>Error: {JSON.stringify(error)}</strong>}
             {loading && <span>Collection: Loading...</span>}
             {!isAllowed && <div> Looks like you are not allowed to be here </div>}
-            {vehicles && isAllowed && <>
+            {prices && isAllowed && <>
                 <h3>Prices</h3>
                 <form onSubmit={handleSubmit}>
                     <TextField
