@@ -9,6 +9,7 @@ import {
 import { useState } from "react";
 import { Navigate } from 'react-router-dom'
 import { useAuthState } from "react-firebase-hooks/auth";
+import Grid2 from '@mui/material/Unstable_Grid2'; // Grid version 2
 
 
 export function Admin() {
@@ -32,8 +33,8 @@ export function Admin() {
     if (prices && scooterPrice == null && bikePrice == null && eBikePrice == null) {
         setValues();
     }
-    if(user && !user.email.includes("@grabowski.com")){
-        return <Navigate to="/"/>
+    if (user && !user.email.includes("@grabowski.com")) {
+        return <Navigate to="/" />
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -51,7 +52,7 @@ export function Admin() {
             setIsAllowed(false);
             return (
                 <>
-                    <div> ne </div>
+                    <div> Error </div>
                 </>
             )
         }
@@ -82,7 +83,11 @@ export function Admin() {
             {!isAllowed && <div> Looks like you are not allowed to be here </div>}
             {prices && isAllowed && <>
                 <h3>Prices</h3>
-                <form onSubmit={handleSubmit}>
+                <Grid2 container >
+                    <Grid2 xs={2}  >
+                    </Grid2>
+                    <Grid2 xs={4}  >
+                    <form onSubmit={handleSubmit}>
                     <TextField
                         style={{ width: "200px", margin: "5px" }}
                         type="number"
@@ -117,6 +122,15 @@ export function Admin() {
                         reset
                     </Button>
                 </form>
+                    </Grid2>
+                    <Grid2 xs={4}  >
+                        anderer preis
+                    </Grid2>
+                    <Grid2 xs={2}  >
+</Grid2>
+                </Grid2 >
+
+                
             </>
             }
         </>
