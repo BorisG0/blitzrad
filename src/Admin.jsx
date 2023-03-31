@@ -13,9 +13,12 @@ import Grid2 from '@mui/material/Unstable_Grid2'; // Grid version 2
 
 
 export function Admin() {
-    const [eBikePrice, setEBikePrice] = useState(null);
-    const [bikePrice, setBikePrice] = useState(null);
-    const [scooterPrice, setScooterPrice] = useState(null);
+    const [eBikeBasePrice, setEBikeBasePrice] = useState(null);
+    const [bikeBasePrice, setBikeBasePrice] = useState(null);
+    const [scooterBasePrice, setScooterBasePrice] = useState(null);
+    const [eBikeDayPrice, setEBikeDayPrice] = useState(null);
+    const [bikeDayPrice, setBikeDayPrice] = useState(null);
+    const [scooterDayPrice, setScooterDayPrice] = useState(null);
     const [isAllowed, setIsAllowed] = useState(true);
 
     const firestore = firebase.firestore();
@@ -30,23 +33,45 @@ export function Admin() {
     const bikeRef = doc(firestore, "pricing", "VzLXRDeAshGMursG1W0o");//bike
     const eBikeRef = doc(firestore, "pricing", "JpJ0w6lAbC16iZutkr9v");//eBike
 
-    if (prices && scooterPrice == null && bikePrice == null && eBikePrice == null) {
-        setValues();
+    if (prices && scooterBasePrice == null) {
+        setBaseValues();
+        setDayValues();
     }
     if (user && !user.email.includes("@grabowski.com")) {
         return <Navigate to="/" />
     }
-    const handleSubmit = async (e) => {
+    const handleBaseSubmit = async (e) => {
         e.preventDefault();
         try {
             await updateDoc(scooterRef, {
-                basePrice: scooterPrice
+                basePrice: scooterBasePrice
             });
             await updateDoc(bikeRef, {
-                basePrice: bikePrice
+                basePrice: bikeBasePrice
             });
             await updateDoc(eBikeRef, {
-                basePrice: eBikePrice
+                basePrice: eBikeBasePrice
+            });
+        } catch (error) {
+            setIsAllowed(false);
+            return (
+                <>
+                    <div> Error </div>
+                </>
+            )
+        }
+    }
+    const handleDaySubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await updateDoc(scooterRef, {
+                pricePerDay: scooterDayPrice
+            });
+            await updateDoc(bikeRef, {
+                pricePerDay: bikeDayPrice
+            });
+            await updateDoc(eBikeRef, {
+                pricePerDay: eBikeDayPrice
             });
         } catch (error) {
             setIsAllowed(false);
@@ -58,21 +83,37 @@ export function Admin() {
         }
 
     }
-    const resetValues = () => {
-        setValues();
+    const resetBaseValues = () => {
+        setBaseValues();
     }
-    function setValues() {
+    const resetDayValues = () => {
+        setDayValues();
+    }
+    function setBaseValues() {
         for (let i = 0; i < prices.length; i++) {
-            console.log(prices[i].type)
             if (prices[i].type == "Scooter") {
 
-                setScooterPrice(prices[i].basePrice);
+                setScooterBasePrice(prices[i].basePrice);
             }
             if (prices[i].type == "Bike") {
-                setBikePrice(prices[i].basePrice);
+                setBikeBasePrice(prices[i].basePrice);
             }
             if (prices[i].type == "E-Bike") {
-                setEBikePrice(prices[i].basePrice);
+                setEBikeBasePrice(prices[i].basePrice);
+            }
+        }
+    }
+    function setDayValues() {
+        for (let i = 0; i < prices.length; i++) {
+            if (prices[i].type == "Scooter") {
+
+                setScooterDayPrice(prices[i].pricePerDay);
+            }
+            if (prices[i].type == "Bike") {
+                setBikeDayPrice(prices[i].pricePerDay);
+            }
+            if (prices[i].type == "E-Bike") {
+                setEBikeDayPrice(prices[i].pricePerDay);
             }
         }
     }
@@ -82,55 +123,91 @@ export function Admin() {
             {loading && <span>Collection: Loading...</span>}
             {!isAllowed && <div> Looks like you are not allowed to be here </div>}
             {prices && isAllowed && <>
-                <h3>Prices</h3>
+                <h1>Prices</h1>
                 <Grid2 container >
                     <Grid2 xs={2}  >
                     </Grid2>
                     <Grid2 xs={4}  >
-                    <form onSubmit={handleSubmit}>
-                    <TextField
-                        style={{ width: "200px", margin: "5px" }}
-                        type="number"
-                        label="E-Bike"
-                        variant="outlined"
-                        value={eBikePrice}
-                        onChange={(e) => setEBikePrice(e.target.value)}
-                    />
-                    <br />
-                    <TextField
-                        style={{ width: "200px", margin: "5px" }}
-                        type="number"
-                        label="Bike"
-                        variant="outlined"
-                        value={bikePrice}
-                        onChange={(e) => setBikePrice(e.target.value)}
-                    />
-                    <br />
-                    <TextField
-                        style={{ width: "200px", margin: "5px" }}
-                        type="number"
-                        label="Scooter"
-                        variant="outlined"
-                        value={scooterPrice}
-                        onChange={(e) => setScooterPrice(e.target.value)}
-                    />
-                    <br />
-                    <Button type='submit' variant="contained" color="primary" style={{ margin: "5px" }}>
-                        save
-                    </Button>
-                    <Button variant="contained" color="primary" onClick={resetValues}>
-                        reset
-                    </Button>
-                </form>
+                        <h2> Base Price</h2>
+                        <form onSubmit={handleBaseSubmit}>
+                            <TextField
+                                style={{ width: "200px", margin: "5px" }}
+                                type="number"
+                                label="E-Bike"
+                                variant="outlined"
+                                value={eBikeBasePrice}
+                                onChange={(e) => setEBikeBasePrice(e.target.value)}
+                            />
+                            <br />
+                            <TextField
+                                style={{ width: "200px", margin: "5px" }}
+                                type="number"
+                                label="Bike"
+                                variant="outlined"
+                                value={bikeBasePrice}
+                                onChange={(e) => setBikeBasePrice(e.target.value)}
+                            />
+                            <br />
+                            <TextField
+                                style={{ width: "200px", margin: "5px" }}
+                                type="number"
+                                label="Scooter"
+                                variant="outlined"
+                                value={scooterBasePrice}
+                                onChange={(e) => setScooterBasePrice(e.target.value)}
+                            />
+                            <br />
+                            <Button type='submit' variant="contained" color="primary" style={{ margin: "5px" }}>
+                                save
+                            </Button>
+                            <Button variant="contained" color="primary" onClick={resetBaseValues}>
+                                reset
+                            </Button>
+                        </form>
                     </Grid2>
                     <Grid2 xs={4}  >
-                        anderer preis
+                        <h2> Day Price</h2>
+                        <form onSubmit={handleDaySubmit}>
+                            <TextField
+                                style={{ width: "200px", margin: "5px" }}
+                                type="number"
+                                label="E-Bike"
+                                variant="outlined"
+                                value={eBikeDayPrice}
+                                onChange={(e) => setEBikeDayPrice(e.target.value)}
+                            />
+                            <br />
+                            <TextField
+                                style={{ width: "200px", margin: "5px" }}
+                                type="number"
+                                label="Bike"
+                                variant="outlined"
+                                value={bikeDayPrice}
+                                onChange={(e) => setBikeDayPrice(e.target.value)}
+                            />
+                            <br />
+                            <TextField
+                                style={{ width: "200px", margin: "5px" }}
+                                type="number"
+                                label="Scooter"
+                                variant="outlined"
+                                value={scooterDayPrice}
+                                onChange={(e) => setScooterDayPrice(e.target.value)}
+                            />
+                            <br />
+                            <Button type='submit' variant="contained" color="primary" style={{ margin: "5px" }}>
+                                save
+                            </Button>
+                            <Button variant="contained" color="primary" onClick={resetDayValues}>
+                                reset
+                            </Button>
+                        </form>
                     </Grid2>
                     <Grid2 xs={2}  >
-</Grid2>
+                    </Grid2>
                 </Grid2 >
 
-                
+
             </>
             }
         </>
