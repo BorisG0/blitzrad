@@ -23,7 +23,7 @@ function otherQrCode(url) {
             value={url}
             bgColor={'#FFFFFF'}
             fgColor={'#000000'}
-            size={256}
+            size={128}
         />)
 }
 function qrCode(url) {
@@ -76,9 +76,9 @@ export function Account() {
                     <>
                     {(user && user.uid == booking.data().uId)?
                         <ListItem key={booking.id} sx={{ border: 0.5, textAlign: "center" }}>
-                            <Grid2 container >
+                            <Grid2 container style={{maxWidth: "2000px", margin: "auto"}}>
 
-                                <Grid2 xs={6} container rowSpacing={1}>
+                                <Grid2 xs={6} container rowSpacing={1} style={{maxWidth: "500px", margin: "auto"}}>
                                     <Grid2 xs={6}  >
                                         Location:
                                     </Grid2>
@@ -116,7 +116,7 @@ export function Account() {
                                         {booking.data().pricePaid},00€
                                     </Grid2>
                                 </Grid2>
-                                <Grid2 xs={6} >
+                                <Grid2 xs={6} style={{maxWidth: "100px", margin: "auto"}}>
                                     {otherQrCode("https://hackernoon.com/how-to-build-a-qr-code-generator-in-react")}
                                 </Grid2>
                             </Grid2>
