@@ -6,7 +6,6 @@ export function MainView(){
     const [selectedLocation, setSelectedLocation] = React.useState(1);
 
     const handleLocationClick = (event, name) => {
-      //setSelectedLocation(name);
         if(selectedLocation == name){
             setSelectedLocation(null)
         }else{

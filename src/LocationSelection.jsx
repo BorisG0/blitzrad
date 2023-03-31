@@ -1,4 +1,3 @@
-//import * as React from 'react';
 import React, { useState, useEffect, useMemo } from 'react';
 import {List, ListItem, ListItemButton, ListItemText, Button, ToggleButton, ToggleButtonGroup} from '@mui/material';
 import { useCollectionData, useCollection } from 'react-firebase-hooks/firestore';
@@ -72,8 +71,6 @@ export function LocationSelection(props){
     const handleBooking = () => {
         //create a paypal payment popup
         setShowPayPal(true)
-
-        //saveBooking();
     }
 
     const saveBooking = async (e) => {
