@@ -123,7 +123,6 @@ export function Account() {
             </>
         )
     } else if (error) {
-        console.log("error")
         return <div>There was an authentication error.</div>;
     } else {
         return <div> Nothing here... maybe you are not logged in? </div>;

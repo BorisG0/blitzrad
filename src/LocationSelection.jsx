@@ -51,13 +51,11 @@ export function LocationSelection(props){
             const basePrice = selectedPricingDoc.data().basePrice;
             const calculatedPriceTemp = basePrice + (pricePerDay * diffDays);
 
-            console.log("basePrice: " + basePrice + " pricePerDay: " + pricePerDay + " diffDays: " + diffDays + " calculatedPrice: " + calculatedPriceTemp);
             setCalculatedPrice(calculatedPriceTemp);
         }
     }
 
     useEffect(() => {
-        console.log('diffDays changed:', diffDays);
         calculatePrice();
       }, [diffDays]);
 
@@ -74,7 +72,6 @@ export function LocationSelection(props){
     const handleBooking = () => {
         //create a paypal payment popup
         setShowPayPal(true)
-        console.log("diffdays from handleBooking: " + diffDays)
 
         //saveBooking();
     }
