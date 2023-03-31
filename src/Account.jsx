@@ -44,6 +44,12 @@ export function getNiceDate(date, withTime) {
     let hh = date.toDate().getHours()
     let minmin = date.toDate().getMinutes()
     if(withTime){
+        if(minmin.toString().length == 1){
+            minmin = 0 + minmin.toString()
+        }
+        if(hh.toString().length == 1){
+            hh = 0 + hh.toString()
+        }
         return dd + "." + mm + "." + yyyy + " " + hh + ":" + minmin
     }else{
         return dd + "." + mm + "." + yyyy
