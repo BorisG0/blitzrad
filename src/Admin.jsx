@@ -10,6 +10,7 @@ import { useState } from "react";
 import { Navigate } from 'react-router-dom'
 import { useAuthState } from "react-firebase-hooks/auth";
 import Grid2 from '@mui/material/Unstable_Grid2'; // Grid version 2
+import { maxHeight } from "@mui/system";
 
 
 export function Admin() {
@@ -124,10 +125,10 @@ export function Admin() {
             {!isAllowed && <div> Looks like you are not allowed to be here </div>}
             {prices && isAllowed && <>
                 <h1>Prices</h1>
+                <div style={{maxWidth: "700px", margin: "auto"}}>
                 <Grid2 container >
-                    <Grid2 xs={2}  >
-                    </Grid2>
-                    <Grid2 xs={4}  >
+
+                    <Grid2 xs={12} md={6}  >
                         <h2> Base Price</h2>
                         <form onSubmit={handleBaseSubmit}>
                             <TextField
@@ -165,7 +166,7 @@ export function Admin() {
                             </Button>
                         </form>
                     </Grid2>
-                    <Grid2 xs={4}  >
+                    <Grid2 xs={12} md={6}  >
                         <h2> Day Price</h2>
                         <form onSubmit={handleDaySubmit}>
                             <TextField
@@ -203,9 +204,9 @@ export function Admin() {
                             </Button>
                         </form>
                     </Grid2>
-                    <Grid2 xs={2}  >
-                    </Grid2>
+
                 </Grid2 >
+                </div>
 
 
             </>
