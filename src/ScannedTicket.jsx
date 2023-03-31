@@ -28,7 +28,7 @@ export function ScannedTicket() {
       {loading && <span>Document: Loading...</span>}
       {value &&
         <>
-          <Card sx={{ minWidth: 275 }}>
+          <Card sx={{ minWidth: 275 }} style={{backgroundColor:"#cde2ff"}}>
             <CardContent>
               <Typography variant="h4">
                 Scanned Booking

@@ -68,9 +68,71 @@ export function Account() {
         }
         return (
             <>
-                <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+                <Typography sx={{ mt: 4, mb: 2 }} variant="h4" component="div">
                     Your Bookings
                 </Typography>
+                <Grid2 container id="body">
+                    {bookings && bookings.docs.map(booking =>
+                    <>
+                    {(user && user.uid == booking.data().uId)?
+                        <Grid2 id="oneBooking" xs={12} md={6} key={booking.id} container style={{maxWidth: "2000px", margin: "auto"}} sx={{ border: 0.5, textAlign: "center" }}>
+                                <Grid2 id="dataInBooking" xs={6} container rowSpacing={1} style={{maxWidth: "500px", margin: "auto"}}>
+                                    <Grid2 xs={6}  >
+                                        Location:
+                                    </Grid2>
+                                    <Grid2 xs={6}  >
+                                        {booking.data().location}
+                                    </Grid2>
+                                    <Grid2 xs={6}  >
+                                        Booked at:
+                                    </Grid2>
+                                    <Grid2 xs={6}>
+                                        {getNiceDate(booking.data().bookedAt, true)}
+                                    </Grid2>
+                                    <Grid2 xs={6}>
+                                        Rent start:
+                                    </Grid2>
+                                    <Grid2 xs={6}>
+                                        {getNiceDate(booking.data().rentStart, false)}
+                                    </Grid2>
+                                    <Grid2 xs={6}>
+                                        Rent end:
+                                    </Grid2>
+                                    <Grid2 xs={6}>
+                                        {getNiceDate(booking.data().rentEnd, false)}
+                                    </Grid2>
+                                    <Grid2 xs={6}>
+                                        Type:
+                                    </Grid2>
+                                    <Grid2 xs={6}>
+                                        {booking.data().type}
+                                    </Grid2>
+                                    <Grid2 xs={6}>
+                                        Price:
+                                    </Grid2>
+                                    <Grid2 xs={6}>
+                                        {booking.data().pricePaid},00€
+                                    </Grid2>
+                                </Grid2>
+                                <Grid2 component={Link} to={`/scanned/${booking.id}`} xs={6} style={{maxWidth: "100px", margin: "auto"}}>
+                                    {otherQrCode("https://hackernoon.com/how-to-build-a-qr-code-generator-in-react")}
+                                </Grid2>
+                        </Grid2>
+                        : null}
+                        </>
+                    )}
+                </Grid2>
+            </>
+        )
+    } else if (error) {
+        return <div>There was an authentication error.</div>;
+    } else {
+        return <div> Nothing here... maybe you are not logged in? </div>;
+    }
+}
+/*
+
+
                 <List id="test" sx={{ position: "center" }}  >
                     {bookings && bookings.docs.map(booking =>
                     <>
@@ -126,11 +188,4 @@ export function Account() {
                         </>
                     )}
                 </List>
-            </>
-        )
-    } else if (error) {
-        return <div>There was an authentication error.</div>;
-    } else {
-        return <div> Nothing here... maybe you are not logged in? </div>;
-    }
-}
+*/
