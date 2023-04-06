@@ -6,7 +6,8 @@ import { useCollection } from 'react-firebase-hooks/firestore';
 import firebase from './firebase';
 import './Account.css';
 import QRCode from 'react-qr-code';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
+
 
 const firestore = firebase.firestore();
 function otherQrCode(url) {
@@ -42,6 +43,7 @@ export function Account() {
     const [query, setQuery] = useState()
     const [bookings] = useCollection(query, { idField: 'id' });
     const [user, loading, error] = useAuthState(auth);
+    const history = useNavigate();
     if (loading) {
         return <div> Loading... </div>;
     } else if (user) {
@@ -110,6 +112,8 @@ export function Account() {
     } else if (error) {
         return <div>There was an authentication error.</div>;
     } else {
+        history('/');
+
         return <div> Nothing here... maybe you are not logged in? </div>;
     }
 }
