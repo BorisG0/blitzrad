@@ -1,19 +1,12 @@
 import Grid2 from '@mui/material/Unstable_Grid2'; // Grid version 2
 import Typography from '@mui/material/Typography';
-import ListItem from '@mui/material/ListItem';
-import List from '@mui/material/List';
-import ListItemText from '@mui/material/ListItemText';
-import { styled } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import React, { useState, useEffect, useMemo } from 'react';
-import { useCollectionData, useCollection } from 'react-firebase-hooks/firestore';
+import React, { useState } from 'react';
+import { useCollection } from 'react-firebase-hooks/firestore';
 import firebase from './firebase';
 import './Account.css';
-import { QRCodeCanvas } from "qrcode.react";
 import QRCode from 'react-qr-code';
 import { Link } from 'react-router-dom';
-import Button from '@mui/material/Button';
 
 const firestore = firebase.firestore();
 function otherQrCode(url) {
@@ -24,16 +17,6 @@ function otherQrCode(url) {
             bgColor={'#FFFFFF'}
             fgColor={'#000000'}
             size={128}
-        />)
-}
-function qrCode(url) {
-    return (
-        <QRCodeCanvas style={{borderStyle: "solid", borderWidth: "5px"}}
-            id="qrCode"
-            value={url}
-            size={300}
-            bgColor={"#ffffff"}
-            level={"H"}
         />)
 }
 const auth = firebase.auth();
