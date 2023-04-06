@@ -13,7 +13,7 @@ const firestore = firebase.firestore();
 function otherQrCode(url) {
     return (
         <QRCode 
-            title="GeeksForGeeks"
+            title="Scan Booking"
             value={url}
             bgColor={'#FFFFFF'}
             fgColor={'#000000'}
