@@ -2,19 +2,16 @@ import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import Card from '@mui/material/Card';
 import firebase from "./firebase";
-import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { Routes, Route, useParams } from 'react-router-dom';
-import { doc, getDoc } from "firebase/firestore";
-import React, { useState, useEffect, useMemo } from 'react';
+import {  useParams } from 'react-router-dom';
+import { doc } from "firebase/firestore";
+import React from 'react';
 import { useDocument } from 'react-firebase-hooks/firestore';
 import { getNiceDate } from "./Account"
 
 const firestore = firebase.firestore();
 
 export function ScannedTicket() {
-
   const { id } = useParams()
-  
   const [value, loading, error] = useDocument(
     doc(firestore, 'bookings', id),
     {

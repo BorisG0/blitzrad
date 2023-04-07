@@ -1,10 +1,6 @@
-import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
-import firebase from './firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
 
 export   const sendThisMail = (user, price) => {
-
     var templateParams = {
         user_name: user.displayName,
         user_email: user.email,
