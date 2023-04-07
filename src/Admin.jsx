@@ -1,17 +1,14 @@
 import firebase from "./firebase";
-import { useCollectionData, useCollection } from "react-firebase-hooks/firestore";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 import { doc, updateDoc } from "firebase/firestore";
 import {
     TextField,
-    Button,
-    Box
+    Button
 } from "@mui/material";
 import { useState } from "react";
 import { Navigate } from 'react-router-dom'
 import { useAuthState } from "react-firebase-hooks/auth";
 import Grid2 from '@mui/material/Unstable_Grid2'; // Grid version 2
-import { maxHeight } from "@mui/system";
-
 
 export function Admin() {
     const [eBikeBasePrice, setEBikeBasePrice] = useState(null);
@@ -82,7 +79,6 @@ export function Admin() {
                 </>
             )
         }
-
     }
     const resetBaseValues = () => {
         setBaseValues();
@@ -127,7 +123,6 @@ export function Admin() {
                 <h1>Prices</h1>
                 <div style={{maxWidth: "700px", margin: "auto"}}>
                 <Grid2 container >
-
                     <Grid2 xs={12} md={6}  >
                         <h2> Base Price</h2>
                         <form onSubmit={handleBaseSubmit}>
@@ -207,8 +202,6 @@ export function Admin() {
 
                 </Grid2 >
                 </div>
-
-
             </>
             }
         </>
