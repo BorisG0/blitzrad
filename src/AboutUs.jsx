@@ -89,23 +89,29 @@ function BasicInformation(){
         const pricingRef = firestore.collection('pricing');
         
         const [bikePrice, setBikePrice] = useState(null);
+        const [bikePriceBase, setBikePriceBase] = useState(null);
         if (pricingRef && bikePrice == null) {
           pricingRef.where("type", "==", "Bike").get().then((querySnapshot) => {
             setBikePrice(querySnapshot.docs[0].data().pricePerDay)
+            setBikePriceBase(querySnapshot.docs[0].data().basePrice)
           });
         }
 
         const [eBikePrice, setEBikePrice] = useState(null);
+        const [eBikePriceBase, setEBikePriceBase] = useState(null);
         if (pricingRef && eBikePrice == null) {
           pricingRef.where("type", "==", "E-Bike").get().then((querySnapshot) => {
             setEBikePrice(querySnapshot.docs[0].data().pricePerDay)
+            setEBikePriceBase(querySnapshot.docs[0].data().basePrice)
           });
         }
 
         const [scooterPrice, setScooterPrice] = useState(null);
+        const [scooterPriceBase, setScooterPriceBase] = useState(null);
         if (pricingRef && scooterPrice == null) {
           pricingRef.where("type", "==", "Scooter").get().then((querySnapshot) => {
             setScooterPrice(querySnapshot.docs[0].data().pricePerDay)
+            setScooterPriceBase(querySnapshot.docs[0].data().basePrice)
           });
         }
 
@@ -127,16 +133,19 @@ function BasicInformation(){
             img: 'https://cdn.pixabay.com/photo/2013/07/13/13/43/racing-bicycle-161449_960_720.png',
             vehicle: 'Bicycle',
             price: bikePrice + '€/day',
+            basePrice: bikePriceBase + '€',
           },
           {
             img: 'https://cdn.pixabay.com/photo/2021/07/31/19/36/electric-scooters-6512899_960_720.jpg',
             vehicle: 'Scooter',
             price: scooterPrice + '€/day',
+            basePrice: scooterPriceBase + '€',
           },
           {
             img: 'https://cdn.pixabay.com/photo/2016/07/20/20/46/electric-mountain-bike-1531262_960_720.jpg',
             vehicle: 'E-Bike',
             price: eBikePrice + '€/day',
+            basePrice: eBikePriceBase + '€',
           },
         ];
         return (
@@ -153,7 +162,11 @@ function BasicInformation(){
                   />
                   <ImageListItemBar
                     title={item.vehicle}
-                    subtitle={<span> Price: {item.price}</span>}
+                    subtitle={
+                    <span>
+                      Base Price: {item.basePrice} <br/>
+                      Price: {item.price}
+                    </span>}
                     position="below"
                   />
                 </ImageListItem>
