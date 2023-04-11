@@ -39,9 +39,8 @@ export function MapScreen(props){
         iconUrl: testIcon,
         iconSize: [128,72],
       });
-      const userPosition = {lat:49.48, lng: 8.47}
 
-
+    const userPosition = {lat:49.486578, lng: 8.469408} //when changing also change in LocationSelection
     const [center, setCenter] = useState({ lat:49.479038, lng:8.470520});
     const ZOOM_LEVEL = 14;
     const mapRef = useRef()

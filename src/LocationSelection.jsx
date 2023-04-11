@@ -179,7 +179,7 @@ export function LocationSelection(props){
   }
 
   function LocationDisplay(props){
-    const userPosition = {lat:49.48, lng: 8.47}
+    const userPosition = {lat:49.486578, lng: 8.469408} //when changing also change in MapScreen
 
     const {id ,name, location, bikeCounter, ebikeCounter, scooterCounter} = props.loc;
     const pos = {lat: location._lat,lng: location._long}
