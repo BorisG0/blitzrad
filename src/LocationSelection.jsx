@@ -206,7 +206,7 @@ export function LocationSelection(props){
                     <DatePicker label="end of rental" value={props.selectedDate} onChange={props.handleDateChange}/>
                     <br/>
 
-                    {props.selectedDate ? <Button variant="contained" onClick={props.handleBooking}>book</Button>: null}
+                    {(props.selectedDate && auth.currentUser) ? <Button variant="contained" onClick={props.handleBooking}>book</Button>: null}
                     
                     </>): null}</>
                 </>
