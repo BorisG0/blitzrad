@@ -86,22 +86,42 @@ function BasicInformation(){
         const vehilcesRef = firestore.collection('vehicles');
         const query = vehilcesRef.limit(25);
         const [vehicles, loading, error] = useCollection(query, { idField: 'id' });
+        const pricingRef = firestore.collection('pricing');
         
-        const [eBikePrice, setEBikePrice] = useState(null);
         const [bikePrice, setBikePrice] = useState(null);
+        if (pricingRef && bikePrice == null) {
+          pricingRef.where("type", "==", "Bike").get().then((querySnapshot) => {
+            setBikePrice(querySnapshot.docs[0].data().pricePerDay)
+          });
+        }
+
+        const [eBikePrice, setEBikePrice] = useState(null);
+        if (pricingRef && eBikePrice == null) {
+          pricingRef.where("type", "==", "E-Bike").get().then((querySnapshot) => {
+            setEBikePrice(querySnapshot.docs[0].data().pricePerDay)
+          });
+        }
+
         const [scooterPrice, setScooterPrice] = useState(null);
-        if (vehicles && scooterPrice == null && bikePrice == null && eBikePrice == null) {
-          for (let i = 0; i < vehicles.docs.length; i++) {
-            if (vehicles.docs[i].id == "scooter") {
-                setScooterPrice(vehicles.docs[i].data().price);
-            }
-            if (vehicles.docs[i].id == "bike") {
-                setBikePrice(vehicles.docs[i].data().price);
-            }
-            if (vehicles.docs[i].id == "eBike") {
-                setEBikePrice(vehicles.docs[i].data().price);
-            }
-        }}
+        if (pricingRef && scooterPrice == null) {
+          pricingRef.where("type", "==", "Scooter").get().then((querySnapshot) => {
+            setScooterPrice(querySnapshot.docs[0].data().pricePerDay)
+          });
+        }
+
+
+        // if (vehicles && scooterPrice == null && bikePrice == null && eBikePrice == null) {
+        //   for (let i = 0; i < vehicles.docs.length; i++) {
+        //     if (vehicles.docs[i].id == "scooter") {
+        //         setScooterPrice(vehicles.docs[i].data().price);
+        //     }
+        //     if (vehicles.docs[i].id == "bike") {
+        //         setBikePrice(vehicles.docs[i].data().price);
+        //     }
+        //     if (vehicles.docs[i].id == "eBike") {
+        //         setEBikePrice(vehicles.docs[i].data().price);
+        //     }
+        // }}
         const productData = [
           {
             img: 'https://cdn.pixabay.com/photo/2013/07/13/13/43/racing-bicycle-161449_960_720.png',
