@@ -84,7 +84,7 @@ export function NavBar() {
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
-              aria-label="account of current user"
+              aria-label="Bookings of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
@@ -175,7 +175,7 @@ export function NavBar() {
               onClose={handleCloseUserMenu}
             >
               <MenuItem component={user ? Link : null} to="/account" onClick={user? handleCloseUserMenu: handleClick}>
-                <Typography textAlign="center">Account</Typography>
+                <Typography textAlign="center">Bookings</Typography>
               </MenuItem>
               <Snackbar
                 anchorOrigin={{
