@@ -60,7 +60,7 @@ export function AboutUs(){
           name: 'Nadine Bauer',
           background:
           <>
-            Hi, ich bin Ndine, 32 Jahre alt und bin erst zwei Jahre nach der Gründung bei Blitzrad eingestiegen. <br/>
+            Hi, ich bin Nadine, 32 Jahre alt und bin erst zwei Jahre nach der Gründung bei Blitzrad eingestiegen. <br/>
             Ich war von dem Geschäftsmodell überzeugt und wollte die damals noch sehr kleine Firma unterstüzen. <br/>
             Zusammen mit Thomas leite ich die Firma.
             </>,
@@ -115,19 +115,6 @@ function BasicInformation(){
           });
         }
 
-
-        // if (vehicles && scooterPrice == null && bikePrice == null && eBikePrice == null) {
-        //   for (let i = 0; i < vehicles.docs.length; i++) {
-        //     if (vehicles.docs[i].id == "scooter") {
-        //         setScooterPrice(vehicles.docs[i].data().price);
-        //     }
-        //     if (vehicles.docs[i].id == "bike") {
-        //         setBikePrice(vehicles.docs[i].data().price);
-        //     }
-        //     if (vehicles.docs[i].id == "eBike") {
-        //         setEBikePrice(vehicles.docs[i].data().price);
-        //     }
-        // }}
         const productData = [
           {
             img: 'https://cdn.pixabay.com/photo/2013/07/13/13/43/racing-bicycle-161449_960_720.png',
