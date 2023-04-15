@@ -48,7 +48,7 @@ export function LocationSelection(props){
             const selectedPricingDoc = await selectedPricingRef.get();
             const pricePerDay = selectedPricingDoc.data().pricePerDay;
             const basePrice = selectedPricingDoc.data().basePrice;
-            const calculatedPriceTemp = basePrice + (pricePerDay * diffDays);
+            const calculatedPriceTemp = pricePerDay * diffDays + +basePrice;
 
             setCalculatedPrice(calculatedPriceTemp);
         }
